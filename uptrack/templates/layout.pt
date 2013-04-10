@@ -48,7 +48,7 @@
             </p>
             -->
             <ul class="nav">
-              <li><a href="/releases">Releases</a></li>
+              <li class="${'active' if page == 'releases' else ''}"><a href="/releases">Releases</a></li>
             </ul>
           </div>
         </div>

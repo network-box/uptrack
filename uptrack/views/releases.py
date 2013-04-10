@@ -17,4 +17,4 @@
 
 
 def list(request):
-    return {}
+    return {'page': 'releases'}
