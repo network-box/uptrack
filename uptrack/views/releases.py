@@ -16,5 +16,9 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from uptrack.models import DBSession, Release
+
+
 def list(request):
-    return {'page': 'releases'}
+    releases = DBSession.query(Release)
+    return {'page': 'releases', 'releases': releases}

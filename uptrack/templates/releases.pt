@@ -3,15 +3,54 @@
                 metal:use-macro="layout.macros['layout']">
 
     <tal:block metal:fill-slot="content">
-      <div class="row-fluid">
-        <!-- One per release -->
-        <div class="offset1 span5">
-          <h2>Bla Bla</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <div class="row-fluid" >
+        <div tal:switch="releases.count() == 0" class="span4 uptrack_list">
+          <div tal:case="True" class="uptrack_disabled">
+            No releases configured.
+          </div>
+          <div tal:case="False">
+            <ul>
+              <li tal:repeat="release releases" data-id="${release.id}">
+                ${release.name}
+              </li>
+            </ul>
+          </div>
+          <div class="uptrack_listcontrols">
+            <ul>
+              <!-- Do **not** add a new line between the two 'li', this adds visible space -->
+              <li class="btn first">+</li><li class="btn last${' disabled' if releases.count() == 0 else ''}">-</li>
+            </ul>
+          </div>
         </div>
-        <div class="span5">
-          <h2>Bla Bla</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+
+        <div class="span7">
+          <form class="form-horizontal">
+            <legend>New release</legend>
+            <input type="hidden" id="id" name="id" />
+            <div class="control-group">
+              <label class="control-label" for="name">Name</label>
+              <div class="controls">
+                <input type="text" id="name" name="name" autocomplete="off" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="koji_tag">Koji tag</label>
+              <div class="controls">
+                <input type="text" id="koji_tag" name="koji_tag" autocomplete="off" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="git_url">Git URL</label>
+              <div class="controls">
+                <input type="text" id="git_url" name="git_url" autocomplete="off" />
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="controls">
+                <button type="submit" class="btn">Submit</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </tal:block>

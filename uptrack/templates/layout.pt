@@ -28,6 +28,7 @@
       }
     </style>
     <link rel="stylesheet" href="${request.static_url('uptrack:static/bootstrap/css/bootstrap-responsive.css')}" />
+    <link rel="stylesheet" href="${request.static_url('uptrack:static/uptrack.css')}" />
 
     <link rel="shortcut icon" href="${request.static_url('uptrack:static/favicon.ico')}" />
   </head>

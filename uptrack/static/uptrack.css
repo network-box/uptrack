@@ -1,0 +1,64 @@
+/* -- Bootstrap overrides ------------------------------------------------- */
+.row-fluid {
+  /* There's just not enough space between the navbar and the content */
+  margin-top: 1.5em;
+}
+input[type="text"], input[type="password"] {
+  /* Horizontal forms seem to not be aligned without this */
+  padding: 0.4em;
+  height: 2.2em;
+}
+
+/* -- List widget --------------------------------------------------------- */
+/* -- The containers -------------------------------------------- */
+.uptrack_list{
+/*  margin: 1em 0; */
+  border: 1px solid black;
+  border-radius: 2px;
+}
+.uptrack_list > div > ul {
+  margin: 0;
+  list-style-type: none;
+  padding: 0;
+}
+.uptrack_list > div:first-child {
+  padding: 0;
+  overflow: auto;
+
+  /* Warning: this must match the line-height of .uptrack_disabled */
+  height: 400px;
+}
+.uptrack_list > div:first-child.uptrack_disabled {
+  cursor: not-allowed;
+  background-color: #fafafa;
+  color: #848484;
+  text-align: center;
+
+  /* Warning: This must match the height of .uptrack_list > div:first-child */
+  line-height: 400px;
+}
+
+
+/* -- The controls ---------------------------------------------- */
+.uptrack_listcontrols {
+  padding: 0.5em;
+  background: linear-gradient(to bottom, #cccccc 0%, #eeeeee 100%);
+  border-top: 1px solid black;
+}
+.uptrack_listcontrols > ul {
+  margin: 0;
+}
+.uptrack_listcontrols > ul > .btn {
+  border-radius: 0;
+}
+.uptrack_listcontrols > ul > .btn:not(.last) {
+  border-right-width: 0px;
+}
+.uptrack_listcontrols > ul > .btn.first {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.uptrack_listcontrols > ul > .btn.last {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
