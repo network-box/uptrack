@@ -47,12 +47,9 @@
               Logged in as <a href="#" class="navbar-link">Username</a>
             </p>
             -->
-            <!-- Enable when we have admin actions
             <ul class="nav">
-              <li class="active"><a href="/">Do something</a></li>
-              <li><a href="/">Overview</a>Do something else</li>
+              <li><a href="/releases">Releases</a></li>
             </ul>
-            -->
           </div>
         </div>
       </div>

@@ -45,4 +45,8 @@ def main(global_config, **settings):
     config.add_view('uptrack.views.overview', route_name='overview',
                     renderer='templates/overview.pt')
 
+    config.add_route('releases', '/releases')
+    config.add_view('uptrack.views.releases.list', route_name='releases',
+                    renderer='templates/releases.pt')
+
     return config.make_wsgi_app()
