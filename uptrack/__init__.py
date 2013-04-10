@@ -15,8 +15,8 @@ def main(global_config, **settings):
     config = Configurator(settings=settings)
     config.add_static_view('static', 'static', cache_max_age=3600)
 
-    config.add_route('home', '/')
-    config.add_view('uptrack.views.overview', route_name='home',
-                    renderer='templates/mytemplate.pt')
+    config.add_route('overview', '/')
+    config.add_view('uptrack.views.overview', route_name='overview',
+                    renderer='templates/overview.pt')
 
     return config.make_wsgi_app()
