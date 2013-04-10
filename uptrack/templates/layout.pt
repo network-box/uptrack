@@ -65,5 +65,8 @@
         <p>Powered by <a href="TODO">Uptrack</a></p>
       </footer>
     </div>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="${request.static_url('uptrack:static/js/jquery-1.9.1.js')}"></script>
   </body>
 </html>
