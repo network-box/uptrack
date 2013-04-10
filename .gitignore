@@ -4,3 +4,5 @@ venv
 *.pyo
 
 *.sqlite
+
+*.swp
