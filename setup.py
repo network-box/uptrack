@@ -1,3 +1,8 @@
+# There is a conflict with older versions on EL 6
+__requires__ = ['PasteDeploy>=1.5.0',
+                'WebOb>=1.2b3',
+                ]
+
 import os
 
 from setuptools import setup, find_packages
