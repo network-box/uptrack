@@ -8,7 +8,7 @@ import os
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, 'README.txt')).read()
+README = open(os.path.join(here, 'README')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
@@ -31,10 +31,10 @@ setup(name='uptrack',
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-      author='',
-      author_email='',
+      author='Mathieu Bridon',
+      author_email='mathieu.bridon@network-box.com',
       url='',
-      keywords='web wsgi bfg pylons pyramid',
+      license='AGPLv3+',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
