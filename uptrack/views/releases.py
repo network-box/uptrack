@@ -22,3 +22,27 @@ from uptrack.models import DBSession, Release
 def list(request):
     releases = DBSession.query(Release)
     return {'page': 'releases', 'releases': releases}
+
+def save(request):
+    if request.POST["id"]:
+        # We were editing an existing release
+        r = DBSession.query(Release).get(request.POST["id"])
+
+    else:
+        # This is a new instance
+        r = Release()
+
+    r.name = request.POST["name"].decode("utf-8")
+    r.koji_tag = request.POST["koji_tag"].decode("utf-8")
+    r.git_url = request.POST["git_url"].decode("utf-8")
+
+    DBSession.add(r)
+    DBSession.flush()
+
+    return {'release': r}
+
+def remove(request):
+    r = DBSession.query(Release).get(request.GET["id"])
+    DBSession.delete(r)
+
+    return {}

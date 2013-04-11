@@ -5,26 +5,30 @@
     <tal:block metal:fill-slot="content">
       <div class="row-fluid" >
         <div tal:switch="releases.count() == 0" class="span4 uptrack_list">
-          <div tal:case="True" class="uptrack_disabled">
+          <div tal:case="True" id="release_list" class="uptrack_disabled">
             No releases configured.
           </div>
-          <div tal:case="False">
+          <div tal:case="False" id="release_list">
             <ul>
-              <li tal:repeat="release releases" data-id="${release.id}">
+              <li tal:repeat="release releases" class="uptrack_listitem"
+                  data-id="${release.id}" data-koji_tag="${release.koji_tag}"
+                  data-git_url="${release.git_url}">
                 ${release.name}
               </li>
             </ul>
           </div>
-          <div class="uptrack_listcontrols">
+          <div class="uptrack_listcontrols" id="release_listcontrols">
             <ul>
               <!-- Do **not** add a new line between the two 'li', this adds visible space -->
-              <li class="btn first">+</li><li class="btn last${' disabled' if releases.count() == 0 else ''}">-</li>
+              <li class="btn first" id="uptrack_listadd">+</li><li class="btn last disabled" id="uptrack_listremove" data-callback="remove_release" data-param="release" data-action="/releases/remove">-</li>
             </ul>
           </div>
         </div>
 
         <div class="span7">
-          <form class="form-horizontal">
+          <form class="form-horizontal ajax"
+                action="/releases/save" method="post"
+                data-callback="save_release" data-param="release">
             <legend>New release</legend>
             <input type="hidden" id="id" name="id" />
             <div class="control-group">

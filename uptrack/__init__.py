@@ -49,4 +49,12 @@ def main(global_config, **settings):
     config.add_view('uptrack.views.releases.list', route_name='releases',
                     renderer='templates/releases.pt')
 
+    config.add_route('save_release', '/releases/save')
+    config.add_view('uptrack.views.releases.save', route_name='save_release',
+                    renderer='json')
+
+    config.add_route('remove_release', '/releases/remove')
+    config.add_view('uptrack.views.releases.remove', route_name='remove_release',
+                    renderer='json')
+
     return config.make_wsgi_app()
