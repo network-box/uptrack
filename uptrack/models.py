@@ -26,8 +26,12 @@ from zope.sqlalchemy import ZopeTransactionExtension
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
+class BaseModel(object):
+    def __json__(self, request):
+        return dict([(x, getattr(self, x))
+                     for x in self._sa_class_manager.keys()])
 
-class Release(Base):
+class Release(Base, BaseModel):
     __tablename__ = 'release'
     id = Column(Integer, primary_key=True)
     name = Column(Unicode, unique=True, nullable=False)
