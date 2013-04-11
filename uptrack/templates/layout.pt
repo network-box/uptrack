@@ -68,5 +68,6 @@
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${request.static_url('uptrack:static/js/jquery-1.9.1.js')}"></script>
+    <script src="${request.static_url('uptrack:static/bootstrap/js/bootstrap.js')}"></script>
   </body>
 </html>
