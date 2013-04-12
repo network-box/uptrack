@@ -24,7 +24,7 @@ from sqlalchemy import engine_from_config
 
 from pyramid.paster import get_appsettings, setup_logging
 
-from ..models import DBSession, Base
+from ..models import DBSession, Base, User
 
 
 def usage(argv):
@@ -42,3 +42,7 @@ def main(argv=sys.argv):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
+
+    # Create the default admin user
+    with transaction.manager:
+        DBSession.add(User(login='admin', password='admin'))
