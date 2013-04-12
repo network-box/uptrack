@@ -42,3 +42,15 @@ class Release(Base, BaseModel):
     koji_tag = Column(Unicode, unique=True, nullable=False)
     git_url = Column(Unicode, unique=True, nullable=False)
 
+class User(Base, BaseModel):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    login = Column(Unicode, unique=True, nullable=False)
+    email = Column(Unicode, unique=True)
+    # FIXME: encrypt passwords
+    password = Column(Unicode, nullable=False)
+    display_name = Column(Unicode)
+
+    def validate_password(self, password):
+        # FIXME: encrypt passwords
+        return self.password == password
