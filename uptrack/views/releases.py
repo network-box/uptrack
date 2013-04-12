@@ -19,7 +19,7 @@
 from uptrack.models import DBSession, Release
 
 
-def list(request):
+def admin(request):
     releases = DBSession.query(Release)
     return {'page': 'releases', 'releases': releases}
 

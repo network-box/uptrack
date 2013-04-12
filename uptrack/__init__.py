@@ -56,7 +56,7 @@ def main(global_config, **settings):
                     renderer='templates/overview.pt')
 
     config.add_route('releases', '/releases')
-    config.add_view('uptrack.views.releases.list', route_name='releases',
+    config.add_view('uptrack.views.releases.admin', route_name='releases',
                     renderer='templates/releases.pt')
 
     config.add_route('save_release', '/releases/save')
