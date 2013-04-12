@@ -27,6 +27,10 @@ DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
 class BaseModel(object):
+    def __init__(self, **kwargs):
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
     def __json__(self, request):
         return dict([(x, getattr(self, x))
                      for x in self._sa_class_manager.keys()])
@@ -38,7 +42,3 @@ class Release(Base, BaseModel):
     koji_tag = Column(Unicode, unique=True, nullable=False)
     git_url = Column(Unicode, unique=True, nullable=False)
 
-    def __init__(self, name=None, koji_tag=None, git_url=None):
-        self.name = name
-        self.koji_tag = koji_tag
-        self.git_url = git_url
