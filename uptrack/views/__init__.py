@@ -17,7 +17,7 @@
 
 
 from pyramid.httpexceptions import HTTPFound
-from pyramid.security import remember
+from pyramid.security import remember, forget
 
 from uptrack.models import DBSession, Release, User
 
@@ -55,3 +55,8 @@ def login(request):
 
     return dict(page='login', message=message, came_from=came_from,
                 login=login, url=request.application_url+'/login')
+
+def logout(request):
+    headers = forget(request)
+
+    return HTTPFound(location=request.route_url('overview'), headers=headers)
