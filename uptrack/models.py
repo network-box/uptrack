@@ -36,7 +36,7 @@ class BaseModel(object):
                      for x in self._sa_class_manager.keys()])
 
 class Release(Base, BaseModel):
-    __tablename__ = 'release'
+    __tablename__ = 'releases'
     id = Column(Integer, primary_key=True)
     name = Column(Unicode, unique=True, nullable=False)
     koji_tag = Column(Unicode, unique=True, nullable=False)
