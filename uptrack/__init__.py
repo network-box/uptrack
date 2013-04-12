@@ -57,14 +57,14 @@ def main(global_config, **settings):
 
     config.add_route('releases', '/releases')
     config.add_view('uptrack.views.releases.admin', route_name='releases',
-                    renderer='templates/releases.pt')
+                    renderer='templates/releases.pt', permission='admin')
 
     config.add_route('save_release', '/releases/save')
     config.add_view('uptrack.views.releases.save', route_name='save_release',
-                    renderer='json')
+                    renderer='json', permission='admin')
 
     config.add_route('remove_release', '/releases/remove')
     config.add_view('uptrack.views.releases.remove', route_name='remove_release',
-                    renderer='json')
+                    renderer='json', permission='admin')
 
     return config.make_wsgi_app()
