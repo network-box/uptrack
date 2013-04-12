@@ -9,6 +9,7 @@ input[type="text"], input[type="password"] {
   height: 2.2em;
 }
 
+
 /* -- List widget --------------------------------------------------------- */
 /* -- The containers -------------------------------------------- */
 .uptrack_list{
@@ -51,7 +52,6 @@ input[type="text"], input[type="password"] {
   background-image: linear-gradient(to bottom, #0088cc, #006fcc);
   color: #ffffff;
 }
-
 
 /* -- The controls ---------------------------------------------- */
 .uptrack_listcontrols {
