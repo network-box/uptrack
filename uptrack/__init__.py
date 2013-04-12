@@ -70,10 +70,12 @@ def main(global_config, **settings):
 
     config.add_static_view('static', 'static', cache_max_age=3600)
 
+    # Public views, status
     config.add_route('overview', '/')
     config.add_view('uptrack.views.overview', route_name='overview',
                     renderer='templates/overview.pt')
 
+    # Log in and log out
     config.add_route('login', '/login')
     config.add_view('uptrack.views.login', route_name='login',
                     renderer='templates/login.pt')
@@ -82,14 +84,13 @@ def main(global_config, **settings):
     config.add_forbidden_view('uptrack.views.login',
                               renderer='templates/login.pt')
 
+    # Release management
     config.add_route('releases', '/releases')
     config.add_view('uptrack.views.releases.admin', route_name='releases',
                     renderer='templates/releases.pt', permission='admin')
-
     config.add_route('save_release', '/releases/save')
     config.add_view('uptrack.views.releases.save', route_name='save_release',
                     renderer='json', permission='admin')
-
     config.add_route('remove_release', '/releases/remove')
     config.add_view('uptrack.views.releases.remove', route_name='remove_release',
                     renderer='json', permission='admin')
