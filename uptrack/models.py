@@ -16,7 +16,9 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from sqlalchemy import Column, Integer, Unicode
+from bcrypt import gensalt, hashpw
+
+from sqlalchemy import Column, Integer, Text, Unicode
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -47,10 +49,16 @@ class User(Base, BaseModel):
     id = Column(Integer, primary_key=True)
     login = Column(Unicode, unique=True, nullable=False)
     email = Column(Unicode, unique=True)
-    # FIXME: encrypt passwords
-    password = Column(Unicode, nullable=False)
+    __password = Column('password', Text, nullable=False)
     display_name = Column(Unicode)
 
+    def __get_password(self):
+        return self.__password
+
+    def __set_password(self, password):
+        self.__password = hashpw(password, gensalt())
+
+    password = property(__get_password, __set_password)
+
     def validate_password(self, password):
-        # FIXME: encrypt passwords
-        return self.password == password
+        return hashpw(password, self.__password) == self.__password

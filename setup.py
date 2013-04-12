@@ -19,6 +19,7 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
+    'py-bcrypt',
     ]
 
 setup(name='uptrack',
