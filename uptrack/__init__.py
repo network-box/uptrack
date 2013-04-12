@@ -21,11 +21,12 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 from pyramid.events import BeforeRender
 from pyramid.renderers import get_renderer
-from pyramid.security import ALL_PERMISSIONS, Allow, Authenticated
+from pyramid.security import (ALL_PERMISSIONS, Allow, Authenticated,
+                              authenticated_userid)
 
 from sqlalchemy import engine_from_config
 
-from .models import DBSession, Base
+from .models import DBSession, Base, User
 
 
 class RootFactory(object):
@@ -41,6 +42,12 @@ def add_base_template(event):
     layout = get_renderer('templates/layout.pt').implementation()
     event.update({'layout': layout})
 
+def get_user(request):
+    userid = authenticated_userid(request)
+    if userid:
+        return DBSession.query(User).filter(User.login==userid).first()
+
+    return None
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -57,6 +64,7 @@ def main(global_config, **settings):
     config.set_root_factory(RootFactory)
     config.set_authentication_policy(authn_policy)
     config.set_authorization_policy(authz_policy)
+    config.add_request_method(get_user, 'user', reify=True)
 
     config.add_subscriber(add_base_template, BeforeRender)
 
