@@ -21,21 +21,11 @@ from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 from pyramid.events import BeforeRender
 from pyramid.renderers import get_renderer
-from pyramid.security import (ALL_PERMISSIONS, Allow, Authenticated,
-                              authenticated_userid)
+from pyramid.security import authenticated_userid
 
 from sqlalchemy import engine_from_config
 
 from .models import DBSession, Base, User
-
-
-class RootFactory(object):
-    __name__ = 'RootFactory'
-    __parent__ = None
-    __acl__ = [(Allow, Authenticated, ALL_PERMISSIONS)]
-
-    def __init__(self, request):
-        pass
 
 
 def add_base_template(event):
@@ -61,7 +51,7 @@ def main(global_config, **settings):
     authz_policy = ACLAuthorizationPolicy()
 
     config = Configurator(settings=settings)
-    config.set_root_factory(RootFactory)
+    config.set_root_factory('uptrack.resources.get_root')
     config.set_authentication_policy(authn_policy)
     config.set_authorization_policy(authz_policy)
     config.add_request_method(get_user, 'user', reify=True)
