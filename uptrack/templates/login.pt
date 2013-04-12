@@ -5,6 +5,7 @@
     <tal:block metal:fill-slot="content">
       <form class="form-signin" action="/login" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="hidden" name="came_from" value="${came_from}" />
         <p class="text-error">${message if message else ''}</p>
         <input type="text" class="input-block-level" name="login" placeholder="Login" value="${login}">
         <input type="password" class="input-block-level" name="password" placeholder="Password">
