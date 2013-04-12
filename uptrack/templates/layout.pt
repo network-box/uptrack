@@ -44,11 +44,12 @@
           </button>
           <a class="brand" href="/">Are we up to date yet?</a>
           <div class="nav-collapse collapse">
-            <!-- Enable when we have login for admin
-            <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">Username</a>
+            <p tal:condition="request.user" class="navbar-text pull-right">
+              Welcome, ${request.user.display_name if request.user.display_name else request.user.login}.
             </p>
-            -->
+            <p tal:condition="not request.user" class="navbar-text pull-right">
+              <a href="/login" class="navbar-link">Sign in</a>
+            </p>
             <ul tal:condition="request.user" class="nav">
               <li class="${'active' if page == 'releases' else ''}"><a href="/releases">Releases</a></li>
             </ul>

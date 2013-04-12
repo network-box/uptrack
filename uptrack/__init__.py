@@ -74,6 +74,10 @@ def main(global_config, **settings):
     config.add_view('uptrack.views.overview', route_name='overview',
                     renderer='templates/overview.pt')
 
+    config.add_route('login', '/login')
+    config.add_view('uptrack.views.login', route_name='login',
+                    renderer='templates/login.pt')
+
     config.add_route('releases', '/releases')
     config.add_view('uptrack.views.releases.admin', route_name='releases',
                     renderer='templates/releases.pt', permission='admin')

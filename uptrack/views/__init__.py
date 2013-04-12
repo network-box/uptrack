@@ -16,7 +16,10 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from uptrack.models import DBSession, Release
+from pyramid.httpexceptions import HTTPFound
+from pyramid.security import remember
+
+from uptrack.models import DBSession, Release, User
 
 
 def overview(request):
@@ -28,3 +31,27 @@ def overview(request):
         releases.append(tuple(x[1] for x in g))
 
     return {'page': 'overview', "releases": releases}
+
+def login(request):
+    login_url = request.route_url('login')
+    referrer = request.url
+    if referrer == login_url:
+        referrer = '/' # never use the login form itself as came_from
+    came_from = request.params.get('came_from', referrer)
+
+    message = login = password = ''
+
+    if 'form.submitted' in request.params:
+        login = request.params['login']
+        password = request.params['password']
+
+        user = DBSession.query(User).filter(User.login==login).first()
+        if user and user.validate_password(password):
+            headers = remember(request, login)
+
+            return HTTPFound(location=came_from, headers=headers)
+
+        message = 'Failed login'
+
+    return dict(page='login', message=message, came_from=came_from,
+                login=login, url=request.application_url+'/login')
