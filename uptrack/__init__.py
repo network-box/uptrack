@@ -16,6 +16,8 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 from pyramid.events import BeforeRender
 from pyramid.renderers import get_renderer
@@ -37,8 +39,16 @@ def main(global_config, **settings):
     DBSession.configure(bind=engine)
     Base.metadata.bind = engine
 
+    authn_policy = AuthTktAuthenticationPolicy(settings['authn_secret'],
+                                               hashalg='sha512')
+    authz_policy = ACLAuthorizationPolicy()
+
     config = Configurator(settings=settings)
+    config.set_authentication_policy(authn_policy)
+    config.set_authorization_policy(authz_policy)
+
     config.add_subscriber(add_base_template, BeforeRender)
+
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     config.add_route('overview', '/')
