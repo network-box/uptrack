@@ -16,5 +16,15 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from uptrack.models import DBSession, Release
+
+
 def overview(request):
-    return {'page': 'overview'}
+    releases = []
+
+    # FIXME: Isn't there a better way? :-/
+    from itertools import groupby
+    for k, g in groupby(enumerate(DBSession.query(Release)), lambda x: x[0]/2):
+        releases.append(tuple(x[1] for x in g))
+
+    return {'page': 'overview', "releases": releases}
