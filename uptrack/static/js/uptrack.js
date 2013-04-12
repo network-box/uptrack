@@ -103,6 +103,12 @@ remove_release = function(item) {
     }
 
     $(item).remove();
+
+    if (!$(".uptrack_listitem").length) {
+        /* We just removed the last one */
+        $(".uptrack_list > div:first-child").addClass("uptrack_disabled")
+                                           .text("No releases configured.");
+    }
 }
 
 prepare_lists = function() {
