@@ -112,11 +112,18 @@ remove_item = function(item) {
 }
 
 prepare_lists = function() {
-    $(".uptrack_listitem").each(function(i, item) {
-        $(item).click(function() {
-            listitem_clicked($(item));
+    var items = $(".uptrack_listitem");
+    if ($(items).length === 0) {
+        var list = $("#uptrack_list");
+        $(list).html("No " + $(list).attr("data-type") + " configured.");
+        $(list).addClass("uptrack_disabled");
+    } else {
+        $(items).each(function(i, item) {
+            $(item).click(function() {
+                listitem_clicked($(item));
+            });
         });
-    });
+    }
 
     $("#uptrack_listadd").click(function() {
         $(".uptrack_listitem.uptrack_selected").removeClass('uptrack_selected');
