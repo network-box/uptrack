@@ -111,7 +111,7 @@ remove_item = function(item, item_type) {
     }
 }
 
-prepare_list = function(item_type) {
+prepare_list = function(item_type, remove_urlroot) {
     var items = $(".uptrack_listitem");
     if ($(items).length === 0) {
         var list = $("#uptrack_list");
@@ -134,11 +134,11 @@ prepare_list = function(item_type) {
         $(this).addClass('disabled');
 
         var item = $(".uptrack_listitem.uptrack_selected");
+        var url = remove_urlroot + $(item).attr("data-id") + '/remove';
 
-        $.get($(this).attr("data-action"), {'id': $(item).attr("data-id")},
-            function(data) {
-                remove_item(item, item_type);
-            }, 'json');
+        $.get(url, {}, function(data) {
+                           remove_item(item, item_type);
+                       }, 'json');
 
         return false;
     });

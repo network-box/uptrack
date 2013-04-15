@@ -60,3 +60,30 @@ def logout(request):
     headers = forget(request)
 
     return HTTPFound(location=request.route_url('overview'), headers=headers)
+
+def admin(request):
+    objects = DBSession.query(request.context.__model__)
+    return {'page': request.context.__name__, "items": objects}
+
+def save(request):
+    if request.POST["id"]:
+        # We were editing an existing instance
+        o = DBSession.query(request.context.__model__).get(request.POST["id"])
+
+    else:
+        # This is a new instance
+        o = request.context.__model__()
+
+    for attr in request.POST:
+        if attr == "id":
+            continue
+        setattr(o, attr, request.POST[attr])
+
+    DBSession.add(o)
+    DBSession.flush()
+
+    return {'item': o}
+
+def remove(request):
+    DBSession.delete(request.context)
+    return {}

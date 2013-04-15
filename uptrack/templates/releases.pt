@@ -17,7 +17,7 @@
           <div id="uptrack_listcontrols">
             <ul>
               <!-- Do **not** add a new line between the two 'li', this adds visible space -->
-              <li class="btn first" id="uptrack_listadd">+</li><li class="btn last disabled" id="uptrack_listremove" data-action="/releases/remove">-</li>
+              <li class="btn first" id="uptrack_listadd">+</li><li class="btn last disabled" id="uptrack_listremove">-</li>
             </ul>
           </div>
         </div>
@@ -57,7 +57,7 @@
       <script type="text/javascript">
         $(document).ready(function() {
             ajaxify_form();
-            prepare_list("${page[:-1]}");
+            prepare_list("${page[:-1]}", "/${page}/");
         });
       </script>
     </tal:block>

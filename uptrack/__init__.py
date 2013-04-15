@@ -75,14 +75,14 @@ def main(global_config, **settings):
                               renderer='templates/login.pt')
 
     # Release management
-    config.add_route('releases', '/releases')
-    config.add_view('uptrack.views.releases.admin', route_name='releases',
-                    renderer='templates/releases.pt', permission='admin')
-    config.add_route('save_release', '/releases/save')
-    config.add_view('uptrack.views.releases.save', route_name='save_release',
-                    renderer='json', permission='admin')
-    config.add_route('remove_release', '/releases/remove')
-    config.add_view('uptrack.views.releases.remove', route_name='remove_release',
-                    renderer='json', permission='admin')
+    config.add_view('uptrack.views.admin', permission='admin',
+                    context='uptrack.resources.ReleaseResource',
+                    renderer='templates/releases.pt')
+    config.add_view('uptrack.views.save', permission='admin',
+                    context='uptrack.resources.ReleaseResource', name='save',
+                    renderer='json')
+    config.add_view('uptrack.views.remove', permission='admin',
+                    context='uptrack.models.Release', name='remove',
+                    renderer='json')
 
     return config.make_wsgi_app()
