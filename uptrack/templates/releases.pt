@@ -24,7 +24,7 @@
 
         <div class="span7">
           <form class="form-horizontal ajax" method="post"
-                action="/releases/save">
+                action="/${page}/save">
             <legend>New ${page[:-1]}</legend>
             <input type="hidden" id="id" name="id" />
             <div class="control-group">
