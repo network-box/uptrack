@@ -77,7 +77,7 @@ def main(global_config, **settings):
     # Release management
     config.add_view('uptrack.views.admin', permission='admin',
                     context='uptrack.resources.ReleaseResource',
-                    renderer='templates/releases.pt')
+                    renderer='templates/admin.pt')
     config.add_view('uptrack.views.save', permission='admin',
                     context='uptrack.resources.ReleaseResource', name='save',
                     renderer='json')
