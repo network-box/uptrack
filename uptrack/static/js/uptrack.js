@@ -39,15 +39,15 @@ listitem_clicked = function(elem) {
     $(elem).addClass("uptrack_selected");
 
     /* Enable the 'delete' button */
-    $(".uptrack_listcontrols > ul > li.last").removeClass("disabled");
+    $("#uptrack_listcontrols > ul > li.last").removeClass("disabled");
 
     /* Update the form */
     update_form(elem);
 }
 
 save_release = function(release, form) {
-    var list = $('#release_list');
-    var controls = $('#release_listcontrols');
+    var list = $('#uptrack_list');
+    var controls = $('#uptrack_listcontrols')[0];
 
     var set_attributes = function(elem, release) {
         $.each(release, function(k, v) {
@@ -106,8 +106,8 @@ remove_release = function(item) {
 
     if (!$(".uptrack_listitem").length) {
         /* We just removed the last one */
-        $(".uptrack_list > div:first-child").addClass("uptrack_disabled")
-                                           .text("No releases configured.");
+        $("#uptrack_list").addClass("uptrack_disabled")
+                          .text("No releases configured.");
     }
 }
 

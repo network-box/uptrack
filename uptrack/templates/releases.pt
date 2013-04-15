@@ -4,11 +4,11 @@
 
     <tal:block metal:fill-slot="content">
       <div class="row-fluid" >
-        <div tal:switch="releases.count() == 0" class="span4 uptrack_list">
-          <div tal:case="True" id="release_list" class="uptrack_disabled">
+        <div tal:switch="releases.count() == 0" id="uptrack_listcontainer" class="span4">
+          <div tal:case="True" id="uptrack_list" class="uptrack_disabled">
             No releases configured.
           </div>
-          <div tal:case="False" id="release_list">
+          <div tal:case="False" id="uptrack_list">
             <ul>
               <li tal:repeat="release releases" class="uptrack_listitem"
                   data-id="${release.id}" data-koji_tag="${release.koji_tag}"
@@ -17,7 +17,7 @@
               </li>
             </ul>
           </div>
-          <div class="uptrack_listcontrols" id="release_listcontrols">
+          <div id="uptrack_listcontrols">
             <ul>
               <!-- Do **not** add a new line between the two 'li', this adds visible space -->
               <li class="btn first" id="uptrack_listadd">+</li><li class="btn last disabled" id="uptrack_listremove" data-callback="remove_release" data-param="release" data-action="/releases/remove">-</li>
