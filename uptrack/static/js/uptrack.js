@@ -95,7 +95,7 @@ save_item = function(item, form) {
     }
 }
 
-remove_item = function(item) {
+remove_item = function(item, item_type) {
     var selected = $(".uptrack_listitem.uptrack_selected");
     if ($(selected).attr("data-id") === $(item).attr("data-id")) {
         /* The user didn't select another entry during the request */
@@ -107,15 +107,15 @@ remove_item = function(item) {
     if (!$(".uptrack_listitem").length) {
         /* We just removed the last one */
         $("#uptrack_list").addClass("uptrack_disabled")
-                          .text("No releases configured.");
+                          .text("No " + item_type + " configured.");
     }
 }
 
-prepare_list = function() {
+prepare_list = function(item_type) {
     var items = $(".uptrack_listitem");
     if ($(items).length === 0) {
         var list = $("#uptrack_list");
-        $(list).html("No " + $(list).attr("data-type") + " configured.");
+        $(list).html("No " + item_type + " configured.");
         $(list).addClass("uptrack_disabled");
     } else {
         $(items).each(function(i, item) {
@@ -132,12 +132,13 @@ prepare_list = function() {
 
     $("#uptrack_listremove").click(function() {
         $(this).addClass('disabled');
+
         var item = $(".uptrack_listitem.uptrack_selected");
 
         $.get($(this).attr("data-action"), {'id': $(item).attr("data-id")},
             function(data) {
-                remove_item(item);
-            }.bind(this), 'json');
+                remove_item(item, item_type);
+            }, 'json');
 
         return false;
     });
