@@ -45,12 +45,12 @@ listitem_clicked = function(elem) {
     update_form(elem);
 }
 
-save_release = function(release, form) {
+save_item = function(item, form) {
     var list = $('#uptrack_list');
     var controls = $('#uptrack_listcontrols')[0];
 
-    var set_attributes = function(elem, release) {
-        $.each(release, function(k, v) {
+    var set_attributes = function(elem, obj) {
+        $.each(obj, function(k, v) {
             if (k === "id") {
                 return;
             } else if (k === "name") {
@@ -63,16 +63,16 @@ save_release = function(release, form) {
 
     var edited = false;
 
-    $(list).find('li').each(function(i, item) {
-        if ($(item).attr('data-id') === release.id.toString()) {
-            /* Modify the existing release */
-            set_attributes($(item), release);
+    $(list).find('li').each(function(i, li) {
+        if ($(li).attr('data-id') === item.id.toString()) {
+            /* Modify the existing item */
+            set_attributes($(li), item);
             edited = true;
         }
     });
 
     if (!edited) {
-        /* Add the new release */
+        /* Add the new item */
         var ul = $(list).find('ul');
         if (!ul.length) {
             /* This is the first one */
@@ -84,8 +84,8 @@ save_release = function(release, form) {
         }
 
         var li = $('<li/>', {'class': 'uptrack_listitem',
-                             'data-id': release.id.toString()});
-        set_attributes($(li), release);
+                             'data-id': item.id.toString()});
+        set_attributes($(li), item);
         $(li).click(function() {
             listitem_clicked($(li));
         });
@@ -95,7 +95,7 @@ save_release = function(release, form) {
     }
 }
 
-remove_release = function(item) {
+remove_item = function(item) {
     var selected = $(".uptrack_listitem.uptrack_selected");
     if ($(selected).attr("data-id") === $(item).attr("data-id")) {
         /* The user didn't select another entry during the request */
@@ -129,8 +129,7 @@ prepare_lists = function() {
 
         $.get($(this).attr("data-action"), {'id': $(item).attr("data-id")},
             function(data) {
-                var callback = window[$(this).attr('data-callback')];
-                callback(item);
+                remove_item(item);
             }.bind(this), 'json');
 
         return false;
@@ -144,8 +143,7 @@ ajaxify_forms = function() {
 
             $.post($(this).attr('action'), $(this).serialize(),
                 function(data) {
-                    var callback = window[$(this).attr('data-callback')];
-                    callback(data[$(this).attr('data-param')], $(this));
+                    save_item(data[$(this).attr('data-param')], $(this));
 
                     $(this).find('button[type=submit]').removeAttr('disabled');
                 }.bind(this), 'json');
