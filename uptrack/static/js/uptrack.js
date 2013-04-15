@@ -108,17 +108,21 @@ remove_item = function(item, item_type) {
     }
 }
 
-prepare_list = function(item_type, remove_urlroot) {
-    var items = $(".uptrack_listitem");
-    if ($(items).length === 0) {
+prepare_list = function(item_type, remove_urlroot, items) {
+    if (items.length === 0) {
         var list = $("#uptrack_list");
         $(list).html("No " + item_type + " configured.");
         $(list).addClass("uptrack_disabled");
     } else {
         $(items).each(function(i, item) {
-            $(item).click(function() {
-                listitem_clicked($(item));
+            var li = $("<li />", {'class': 'uptrack_listitem'});
+            set_listattributes(li, item);
+
+            $(li).click(function() {
+                listitem_clicked($(li));
             });
+
+            $("#uptrack_list > ul").append(li);
         });
     }
 

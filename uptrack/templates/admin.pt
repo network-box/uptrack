@@ -7,11 +7,6 @@
         <div id="uptrack_listcontainer" class="span4">
           <div id="uptrack_list">
             <ul>
-              <li tal:repeat="item items" class="uptrack_listitem"
-                  data-id="${item.id}" data-koji_tag="${item.koji_tag}"
-                  data-git_url="${item.git_url}">
-                ${item.name}
-              </li>
             </ul>
           </div>
           <div id="uptrack_listcontrols">
@@ -32,7 +27,7 @@
       <script type="text/javascript">
         $(document).ready(function() {
             ajaxify_form();
-            prepare_list("${page[:-1]}", "/${page}/");
+            prepare_list("${page[:-1]}", "/${page}/", ${[item.__json__() for item in items]});
         });
       </script>
     </tal:block>
