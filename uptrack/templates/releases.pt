@@ -57,8 +57,8 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-        ajaxify_forms();
-        prepare_lists();
+        ajaxify_form();
+        prepare_list();
     });
   </script>
 </html>

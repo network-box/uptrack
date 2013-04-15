@@ -111,7 +111,7 @@ remove_item = function(item) {
     }
 }
 
-prepare_lists = function() {
+prepare_list = function() {
     var items = $(".uptrack_listitem");
     if ($(items).length === 0) {
         var list = $("#uptrack_list");
@@ -143,19 +143,17 @@ prepare_lists = function() {
     });
 }
 
-ajaxify_forms = function() {
-    $('form.ajax').each(function(i, form) {
-        $(form).submit(function() {
-            $(this).find('button[type=submit]').attr('disabled', 'disabled');
+ajaxify_form = function() {
+    $('form.ajax').submit(function() {
+        $(this).find('button[type=submit]').attr('disabled', 'disabled');
 
-            $.post($(this).attr('action'), $(this).serialize(),
-                function(data) {
-                    save_item(data["item"], $(this));
+        $.post($(this).attr('action'), $(this).serialize(),
+            function(data) {
+                save_item(data["item"], $(this));
 
-                    $(this).find('button[type=submit]').removeAttr('disabled');
-                }.bind(this), 'json');
+                $(this).find('button[type=submit]').removeAttr('disabled');
+            }.bind(this), 'json');
 
-            return false;
-        });
+        return false;
     });
 }
