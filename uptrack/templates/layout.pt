@@ -31,6 +31,10 @@
     <link rel="stylesheet" href="${request.static_url('uptrack:static/uptrack.css')}" />
 
     <link rel="shortcut icon" href="${request.static_url('uptrack:static/favicon.ico')}" />
+
+    <script src="${request.static_url('uptrack:static/js/jquery-1.9.1.js')}"></script>
+    <script src="${request.static_url('uptrack:static/bootstrap/js/bootstrap.js')}"></script>
+    <script src="${request.static_url('uptrack:static/js/uptrack.js')}"></script>
   </head>
 
   <body>
@@ -68,10 +72,5 @@
         <p>Powered by <a href="TODO">Uptrack</a></p>
       </footer>
     </div>
-
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${request.static_url('uptrack:static/js/jquery-1.9.1.js')}"></script>
-    <script src="${request.static_url('uptrack:static/bootstrap/js/bootstrap.js')}"></script>
-    <script src="${request.static_url('uptrack:static/js/uptrack.js')}"></script>
   </body>
 </html>
