@@ -53,12 +53,12 @@
           </form>
         </div>
       </div>
-    </tal:block>
 
-  <script type="text/javascript">
-    $(document).ready(function() {
-        ajaxify_form();
-        prepare_list();
-    });
-  </script>
+      <script type="text/javascript">
+        $(document).ready(function() {
+            ajaxify_form();
+            prepare_list();
+        });
+      </script>
+    </tal:block>
 </html>
