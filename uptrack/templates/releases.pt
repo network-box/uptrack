@@ -17,15 +17,14 @@
           <div id="uptrack_listcontrols">
             <ul>
               <!-- Do **not** add a new line between the two 'li', this adds visible space -->
-              <li class="btn first" id="uptrack_listadd">+</li><li class="btn last disabled" id="uptrack_listremove" data-callback="remove_release" data-param="release" data-action="/releases/remove">-</li>
+              <li class="btn first" id="uptrack_listadd">+</li><li class="btn last disabled" id="uptrack_listremove" data-action="/releases/remove">-</li>
             </ul>
           </div>
         </div>
 
         <div class="span7">
-          <form class="form-horizontal ajax"
-                action="/releases/save" method="post"
-                data-callback="save_release" data-param="release">
+          <form class="form-horizontal ajax" method="post"
+                action="/releases/save">
             <legend>New release</legend>
             <input type="hidden" id="id" name="id" />
             <div class="control-group">
