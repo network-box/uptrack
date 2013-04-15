@@ -33,9 +33,18 @@ class BaseModel(object):
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-    def __json__(self, request):
-        return dict([(x, getattr(self, x))
-                     for x in self._sa_class_manager.keys()])
+    def __json__(self, request=None):
+        d = {}
+
+        for attr in self._sa_class_manager.keys():
+            value = getattr(self, attr)
+
+            if hasattr(value, "encode"):
+                value = value.encode("utf-8")
+
+            d[attr] = value
+
+        return d
 
 class Release(Base, BaseModel):
     __tablename__ = 'releases'
