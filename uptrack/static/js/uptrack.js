@@ -51,9 +51,7 @@ save_item = function(item, form) {
 
     var set_attributes = function(elem, obj) {
         $.each(obj, function(k, v) {
-            if (k === "id") {
-                return;
-            } else if (k === "name") {
+            if (k === "name") {
                 elem.text(v);
             } else {
                 elem.attr('data-'+k, v);
@@ -83,8 +81,7 @@ save_item = function(item, form) {
             ul = ul[0];
         }
 
-        var li = $('<li/>', {'class': 'uptrack_listitem',
-                             'data-id': item.id.toString()});
+        var li = $('<li/>', {'class': 'uptrack_listitem'});
         set_attributes($(li), item);
         $(li).click(function() {
             listitem_clicked($(li));
