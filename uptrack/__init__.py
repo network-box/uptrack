@@ -74,15 +74,15 @@ def main(global_config, **settings):
     config.add_forbidden_view('uptrack.views.login',
                               renderer='templates/login.pt')
 
-    # Release management
+    # Admin interfaces
     config.add_view('uptrack.views.admin', permission='admin',
-                    context='uptrack.resources.ReleaseResource',
+                    context='uptrack.resources.BaseResource',
                     renderer='templates/admin.pt')
     config.add_view('uptrack.views.save', permission='admin',
-                    context='uptrack.resources.ReleaseResource', name='save',
+                    context='uptrack.resources.BaseResource', name='save',
                     renderer='json')
     config.add_view('uptrack.views.remove', permission='admin',
-                    context='uptrack.models.Release', name='remove',
+                    context='uptrack.models.BaseModel', name='remove',
                     renderer='json')
 
     return config.make_wsgi_app()
