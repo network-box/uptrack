@@ -145,7 +145,7 @@ prepare_list = function(item_type, remove_urlroot) {
 }
 
 ajaxify_form = function() {
-    $('form.ajax').submit(function() {
+    $('form').submit(function() {
         $(this).find('button[type=submit]').attr('disabled', 'disabled');
 
         $.post($(this).attr('action'), $(this).serialize(),

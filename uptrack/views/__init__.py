@@ -16,6 +16,8 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import deform
+
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
 
@@ -63,7 +65,17 @@ def logout(request):
 
 def admin(request):
     objects = DBSession.query(request.context.__model__)
-    return {'page': request.context.__name__, "items": objects}
+
+    name = request.context.__name__
+    schema = request.context.__schema__()
+    form = deform.Form(schema,
+                       # Passing title= sets the legend not only for the form,
+                       # but also for all the fields. :-/
+                       #title="New %s"%name[:-1],
+                       action="/%s/save"%name, buttons=('submit',))
+
+    return {'page': name, "items": objects,
+            'form': form}
 
 def save(request):
     if request.POST["id"]:

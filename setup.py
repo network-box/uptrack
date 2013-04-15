@@ -20,6 +20,7 @@ requires = [
     'zope.sqlalchemy',
     'waitress',
     'py-bcrypt',
+    'deform_bootstrap',
     ]
 
 setup(name='uptrack',

@@ -1,6 +1,7 @@
 from pyramid.security import ALL_PERMISSIONS, Allow, Authenticated
 
 from .models import DBSession, Release
+from uptrack.schemas import ReleaseSchema
 
 
 resources = {}
@@ -38,6 +39,7 @@ class BaseResource(object):
 
 class ReleaseResource(BaseResource):
     __model__ = Release
+    __schema__ = ReleaseSchema
 
 
 def get_root(request):
