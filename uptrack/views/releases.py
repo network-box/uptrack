@@ -21,7 +21,7 @@ from uptrack.models import DBSession, Release
 
 def admin(request):
     releases = DBSession.query(Release)
-    return {'page': 'releases', 'releases': releases}
+    return {'page': 'releases', 'items': releases}
 
 def save(request):
     if request.POST["id"]:
@@ -39,7 +39,7 @@ def save(request):
     DBSession.add(r)
     DBSession.flush()
 
-    return {'release': r}
+    return {'item': r}
 
 def remove(request):
     r = DBSession.query(Release).get(request.GET["id"])

@@ -7,10 +7,10 @@
         <div id="uptrack_listcontainer" class="span4">
           <div id="uptrack_list" data-type="release">
             <ul>
-              <li tal:repeat="release releases" class="uptrack_listitem"
-                  data-id="${release.id}" data-koji_tag="${release.koji_tag}"
-                  data-git_url="${release.git_url}">
-                ${release.name}
+              <li tal:repeat="item items" class="uptrack_listitem"
+                  data-id="${item.id}" data-koji_tag="${item.koji_tag}"
+                  data-git_url="${item.git_url}">
+                ${item.name}
               </li>
             </ul>
           </div>

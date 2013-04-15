@@ -150,7 +150,7 @@ ajaxify_forms = function() {
 
             $.post($(this).attr('action'), $(this).serialize(),
                 function(data) {
-                    save_item(data[$(this).attr('data-param')], $(this));
+                    save_item(data["item"], $(this));
 
                     $(this).find('button[type=submit]').removeAttr('disabled');
                 }.bind(this), 'json');
