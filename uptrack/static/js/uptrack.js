@@ -45,26 +45,26 @@ listitem_clicked = function(elem) {
     update_form(elem);
 }
 
+var set_listattributes = function(elem, obj) {
+    $.each(obj, function(k, v) {
+        if (k === "name") {
+            elem.text(v);
+        } else {
+            elem.attr('data-'+k, v.toString());
+        }
+    });
+}
+
 save_item = function(item, form) {
     var list = $('#uptrack_list');
     var controls = $('#uptrack_listcontrols')[0];
-
-    var set_attributes = function(elem, obj) {
-        $.each(obj, function(k, v) {
-            if (k === "name") {
-                elem.text(v);
-            } else {
-                elem.attr('data-'+k, v);
-            }
-        });
-    }
 
     var edited = false;
 
     $(list).find('li').each(function(i, li) {
         if ($(li).attr('data-id') === item.id.toString()) {
             /* Modify the existing item */
-            set_attributes($(li), item);
+            set_listattributes($(li), item);
             edited = true;
         }
     });
@@ -82,7 +82,7 @@ save_item = function(item, form) {
         }
 
         var li = $('<li/>', {'class': 'uptrack_listitem'});
-        set_attributes($(li), item);
+        set_listattributes($(li), item);
         $(li).click(function() {
             listitem_clicked($(li));
         });
