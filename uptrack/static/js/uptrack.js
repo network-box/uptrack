@@ -140,7 +140,7 @@ prepare_lists = function() {
 ajaxify_forms = function() {
     $('form.ajax').each(function(i, form) {
         $(form).submit(function() {
-            $(this).find('button[type=submit] ').attr('disabled', 'disabled');
+            $(this).find('button[type=submit]').attr('disabled', 'disabled');
 
             $.post($(this).attr('action'), $(this).serialize(),
                 function(data) {
