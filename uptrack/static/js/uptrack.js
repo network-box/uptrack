@@ -159,8 +159,3 @@ ajaxify_forms = function() {
         });
     });
 }
-
-$(document).ready(function() {
-    ajaxify_forms();
-    prepare_lists();
-});

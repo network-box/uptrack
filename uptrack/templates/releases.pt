@@ -54,4 +54,11 @@
         </div>
       </div>
     </tal:block>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+        ajaxify_forms();
+        prepare_lists();
+    });
+  </script>
 </html>
