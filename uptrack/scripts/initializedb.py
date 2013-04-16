@@ -46,4 +46,5 @@ def main(argv=sys.argv):
 
     # Create the default admin user
     with transaction.manager:
-        DBSession.add(User(login=u'admin', password='admin'))
+        DBSession.add(User(login=u'admin', password='admin',
+                           name=u'Default Admin'))
