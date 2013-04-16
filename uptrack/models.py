@@ -39,6 +39,9 @@ class BaseModel(object):
         for attr in self._sa_class_manager.keys():
             value = getattr(self, attr)
 
+            if value is None:
+                value = ''
+
             if hasattr(value, "encode"):
                 value = value.encode("utf-8")
 
