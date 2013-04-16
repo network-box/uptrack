@@ -37,6 +37,9 @@ class BaseModel(object):
         d = {}
 
         for attr in self._sa_class_manager.keys():
+            if "password" in attr:
+                continue
+
             value = getattr(self, attr)
 
             if value is None:
