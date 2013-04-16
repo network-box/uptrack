@@ -45,6 +45,6 @@ setup(name='uptrack',
       [paste.app_factory]
       main = uptrack:main
       [console_scripts]
-      initialize_uptrack_db = uptrack.scripts.initializedb:main
+      uptrack-initdb = uptrack.scripts.initializedb:main
       """,
       )
