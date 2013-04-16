@@ -28,6 +28,14 @@ class ReleaseSchema(colander.Schema):
     git_url = colander.SchemaNode(colander.String(), title="Git URL")
 
 
+class UpstreamSchema(colander.Schema):
+    id = colander.SchemaNode(colander.Integer(),
+                             widget=deform.widget.HiddenWidget(),
+                             missing=colander.null)
+    name = colander.SchemaNode(colander.String())
+    base_url = colander.SchemaNode(colander.String(), title="Base URL")
+
+
 class UserSchema(colander.Schema):
     id = colander.SchemaNode(colander.Integer(),
                              widget=deform.widget.HiddenWidget(),
