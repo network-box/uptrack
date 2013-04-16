@@ -72,7 +72,8 @@ def admin(request):
                        # Passing title= sets the legend not only for the form,
                        # but also for all the fields. :-/
                        #title="New %s"%name[:-1],
-                       action="/%s/save"%name, buttons=('submit',))
+                       action="/%s/save"%name, buttons=('submit',),
+                       autocomplete=False)
 
     return {'page': name, "items": objects,
             'form': form}

@@ -20,6 +20,9 @@ requires = [
     'zope.sqlalchemy',
     'waitress',
     'py-bcrypt',
+
+    # Bump the needed version once this bug is fixed:
+    # https://github.com/Kotti/deform_bootstrap/pull/54
     'deform_bootstrap',
     ]
 
