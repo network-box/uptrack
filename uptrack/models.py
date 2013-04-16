@@ -57,7 +57,7 @@ class Release(Base, BaseModel):
     id = Column(Integer, primary_key=True)
     name = Column(Unicode, unique=True, nullable=False)
     koji_tag = Column(Unicode, unique=True, nullable=False)
-    git_url = Column(Unicode, unique=True, nullable=False)
+    git_branch = Column(Unicode, unique=True, nullable=False)
 
 
 class Upstream(Base, BaseModel):

@@ -25,7 +25,7 @@ class ReleaseSchema(colander.Schema):
                              missing=colander.null)
     name = colander.SchemaNode(colander.String())
     koji_tag = colander.SchemaNode(colander.String())
-    git_url = colander.SchemaNode(colander.String(), title="Git URL")
+    git_branch = colander.SchemaNode(colander.String())
 
 
 class UpstreamSchema(colander.Schema):
