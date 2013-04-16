@@ -26,3 +26,14 @@ class ReleaseSchema(colander.Schema):
     name = colander.SchemaNode(colander.String())
     koji_tag = colander.SchemaNode(colander.String())
     git_url = colander.SchemaNode(colander.String(), title="Git URL")
+
+
+class UserSchema(colander.Schema):
+    id = colander.SchemaNode(colander.Integer(),
+                             widget=deform.widget.HiddenWidget(),
+                             missing=colander.null)
+    login = colander.SchemaNode(colander.String())
+    name = colander.SchemaNode(colander.String())
+    email = colander.SchemaNode(colander.String())
+    password = colander.SchemaNode(colander.String(),
+                                   widget=deform.widget.PasswordWidget())

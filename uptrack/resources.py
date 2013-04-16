@@ -1,7 +1,7 @@
 from pyramid.security import ALL_PERMISSIONS, Allow, Authenticated
 
-from .models import DBSession, Release
-from uptrack.schemas import ReleaseSchema
+from .models import DBSession, Release, User
+from uptrack.schemas import ReleaseSchema, UserSchema
 
 
 resources = {}
@@ -41,10 +41,15 @@ class ReleaseResource(BaseResource):
     __model__ = Release
     __schema__ = ReleaseSchema
 
+class UserResource(BaseResource):
+    __model__ = User
+    __schema__ = UserSchema
+
 
 def get_root(request):
     global resources
     resources.update({"releases": ReleaseResource,
+                      "users": UserResource,
                       })
 
     return RootFactory(request)

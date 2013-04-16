@@ -57,6 +57,7 @@
             </p>
             <ul tal:condition="request.user" class="nav">
               <li class="${'active' if page == 'releases' else ''}"><a href="/releases">Releases</a></li>
+              <li class="${'active' if page == 'users' else ''}"><a href="/users">Users</a></li>
             </ul>
           </div>
         </div>
