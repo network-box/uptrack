@@ -9,7 +9,7 @@ update_form = function(elem) {
                 $(input).val('');
             }
         });
-        $("input[type=text]").each(function(i, input) {
+        $("input[type=text],input[type=password]").each(function(i, input) {
             $(input).val('');
         });
     } else {
@@ -22,7 +22,7 @@ update_form = function(elem) {
                 $(input).val($.trim($(elem).attr('data-id')));
             }
         });
-        $("input[type=text]").each(function(i, input) {
+        $("input[type=text],input[type=password]").each(function(i, input) {
             var name = $(input).attr("name");
             if (name === "name") {
                 $(input).val($.trim($(elem).text()));
