@@ -49,7 +49,7 @@
           <a class="brand" href="/">Are we up to date yet?</a>
           <div class="nav-collapse collapse">
             <p tal:condition="request.user" class="navbar-text pull-right">
-              Welcome, ${request.user.display_name if request.user.display_name else request.user.login}.
+              Welcome, ${request.user.name if request.user.name else request.user.login}.
               <a href="/logout" class="navbar-link">Already leaving?</a>
             </p>
             <p tal:condition="not request.user" class="navbar-text pull-right">

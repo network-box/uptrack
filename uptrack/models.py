@@ -59,7 +59,7 @@ class User(Base, BaseModel):
     login = Column(Unicode, unique=True, nullable=False)
     email = Column(Unicode, unique=True)
     __password = Column('password', Text, nullable=False)
-    display_name = Column(Unicode)
+    name = Column(Unicode)
 
     def __get_password(self):
         return self.__password
