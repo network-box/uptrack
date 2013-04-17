@@ -18,9 +18,10 @@
 
 from bcrypt import gensalt, hashpw
 
-from sqlalchemy import Column, Integer, Text, Unicode
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.schema import Column
+from sqlalchemy.types import Integer, Text, Unicode
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
