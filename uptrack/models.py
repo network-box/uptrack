@@ -28,6 +28,7 @@ from zope.sqlalchemy import ZopeTransactionExtension
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
+
 class BaseModel(object):
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -51,6 +52,7 @@ class BaseModel(object):
             d[attr] = value
 
         return d
+
 
 class Release(Base, BaseModel):
     __tablename__ = 'releases'
