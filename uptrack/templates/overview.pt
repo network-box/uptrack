@@ -3,15 +3,17 @@
                 metal:use-macro="layout.macros['layout']">
 
   <tal:block metal:fill-slot="content">
-    <div tal:repeat="release_tuple releases" class="row-fluid">
+    <div tal:repeat="i_release filter(lambda x: x[0]%2==0, enumerate(releases))" class="row-fluid">
+      <tal:block tal:omit-tag="" tal:define="index i_release[0]; release i_release[1]">
       <div class="span5 offset1">
-        <h4>Overview of ${release_tuple[0].name} packages</h4>
+        <h4>Overview of ${release.name} packages</h4>
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
       </div>
-      <div tal:condition="len(release_tuple) == 2" class="span5">
-        <h4>Overview of ${release_tuple[1].name} packages</h4>
+      <div tal:condition="len(releases) > index+1" class="span5">
+        <h4>Overview of ${releases[index+1].name} packages</h4>
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
       </div>
+      </tal:block>
     </div>
   </tal:block>
 </html>

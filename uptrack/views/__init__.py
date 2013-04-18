@@ -27,10 +27,8 @@ from uptrack.models import DBSession, Release, User
 def overview(request):
     releases = []
 
-    # FIXME: Isn't there a better way? :-/
-    from itertools import groupby
-    for k, g in groupby(enumerate(DBSession.query(Release)), lambda x: x[0]/2):
-        releases.append(tuple(x[1] for x in g))
+    for release in DBSession.query(Release):
+        releases.append(release)
 
     return {'page': 'overview', "releases": releases}
 
