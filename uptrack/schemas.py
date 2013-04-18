@@ -33,6 +33,7 @@ class UpstreamSchema(colander.Schema):
                              widget=deform.widget.HiddenWidget(),
                              missing=colander.null)
     name = colander.SchemaNode(colander.String())
+    git_branch = colander.SchemaNode(colander.String())
     base_url = colander.SchemaNode(colander.String(), title="Base URL")
 
 

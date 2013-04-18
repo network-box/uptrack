@@ -69,6 +69,7 @@ class Upstream(Base, BaseModel):
     __tablename__ = 'upstreams'
     id = Column(Integer, primary_key=True)
     name = Column(Unicode, unique=True, nullable=False)
+    git_branch = Column(Unicode, unique=True, nullable=False)
     base_url = Column(Unicode, unique=True, nullable=False)
 
 
