@@ -50,5 +50,6 @@ setup(name='uptrack',
       main = uptrack:main
       [console_scripts]
       uptrack-initdb = uptrack.scripts.initializedb:main
+      uptrack-sync = uptrack.scripts.sync:main
       """,
       )
