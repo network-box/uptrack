@@ -38,7 +38,9 @@ class BaseModel(object):
     def __json__(self, request=None):
         d = {}
 
-        for attr in self._sa_class_manager.keys():
+        for c in self.__table__.columns:
+            attr = c.name
+
             if "password" in attr:
                 continue
 
