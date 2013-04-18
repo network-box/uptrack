@@ -19,8 +19,8 @@
 from bcrypt import gensalt, hashpw
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.schema import Column
+from sqlalchemy.orm import relation, scoped_session, sessionmaker
+from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import Integer, Text, Unicode
 
 from zope.sqlalchemy import ZopeTransactionExtension
@@ -55,6 +55,19 @@ class BaseModel(object):
             d[attr] = value
 
         return d
+
+
+class Package(Base, BaseModel):
+    __tablename__ = 'packages'
+    id = Column(Integer, primary_key=True)
+    name = Column(Unicode, nullable=False)
+    release_id = Column(Integer, ForeignKey('releases.id'), nullable=False)
+    released_evr = Column(Unicode)
+    upstream_id = Column(Integer, ForeignKey('upstreams.id'))
+    upstream_evr = Column(Unicode)
+
+    release = relation("Release", backref="packages")
+    upstream = relation("Upstream", backref="packages")
 
 
 class Release(Base, BaseModel):
