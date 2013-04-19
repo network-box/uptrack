@@ -6,12 +6,14 @@
     <div tal:repeat="i_release filter(lambda x: x[0]%2==0, enumerate(releases))" class="row-fluid">
       <tal:block tal:omit-tag="" tal:define="index i_release[0]; release i_release[1]">
       <div class="span5 offset1">
-        <h4>Overview of ${release.name} packages</h4>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <h4>Overview of ${release["name"]} packages</h4>
+        <p>Packages with problems: ${release["problems"]}</p>
+        <p>Total number of packages: ${release["total"]}</p>
       </div>
       <div tal:condition="len(releases) > index+1" class="span5">
-        <h4>Overview of ${releases[index+1].name} packages</h4>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <h4>Overview of ${releases[index+1]["name"]} packages</h4>
+        <p>Packages with problems: ${releases[index+1]["problems"]}</p>
+        <p>Total number of packages: ${releases[index+1]["total"]}</p>
       </div>
       </tal:block>
     </div>

@@ -21,14 +21,33 @@ import deform
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
 
-from uptrack.models import DBSession, Release, User
+from uptrack.models import DBSession, Package, Release, User
 
 
 def overview(request):
+    pkgquery = DBSession.query(Package)
+
     releases = []
 
     for release in DBSession.query(Release):
-        releases.append(release)
+        problems = 0
+
+        pkgs = pkgquery.filter(Package.release==release)
+        pkgs = pkgs.group_by(Package.upstream)
+        total = pkgs.count()
+
+        for pkg in pkgs:
+            if not pkg.upstream:
+                problems += 1
+
+            elif not pkg.upstream_evr:
+                problems += 1
+
+            # TODO: Up to date packages, out of date packages
+
+        r = release.__json__()
+        r.update({"problems": problems, "total": total})
+        releases.append(r)
 
     return {'page': 'overview', "releases": releases}
 
