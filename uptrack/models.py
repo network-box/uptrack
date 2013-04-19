@@ -69,6 +69,9 @@ class Package(Base, BaseModel):
     release = relation("Release", backref="packages")
     upstream = relation("Upstream", backref="packages")
 
+    def __str__(self):
+        return "%s-%s" % (self.name, self.released_evr)
+
 
 class Release(Base, BaseModel):
     __tablename__ = 'releases'

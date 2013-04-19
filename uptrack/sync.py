@@ -20,9 +20,11 @@ import logging
 
 import koji
 
+from sqlalchemy.sql import and_
+
 import transaction
 
-from uptrack.models import DBSession, Release
+from uptrack.models import DBSession, Package, Release
 
 
 class Build(object):
@@ -31,6 +33,10 @@ class Build(object):
         self.epoch = unicode(epoch) if epoch is not None else u'0'
         self.version = unicode(version)
         self.release = unicode(release)
+
+    @property
+    def evr(self):
+        return "%s:%s-%s" % (self.epoch, self.version, self.release)
 
 
 class Sync(object):
@@ -52,13 +58,30 @@ class Sync(object):
 
     def run(self):
         """Run the sync"""
+        pkgs = DBSession.query(Package)
         releases = DBSession.query(Release)
 
         for release in releases:
             self.log.info("Synchronizing %s..." % release.name)
             builds = self.get_latest_builds(release.koji_tag)
 
-            # TODO: Update the packages in DB with the build info
-            # TODO: Compare with the latest version from upstream
+            for build in builds:
+                self.log.info(" Processing %s..." % build.name)
+                pkg = pkgs.filter(and_(Package.name==build.name,
+                                       Package.release==release)).first()
+
+                if not pkg:
+                    self.log.debug("  New package")
+                    pkg = Package(name=build.name, release=release)
+
+                elif pkg.released_evr == build.evr:
+                    self.log.debug("  No change, ignoring")
+                    continue
+
+                self.log.debug("  We updated %s to %s" % (pkg, build.evr))
+                pkg.released_evr = build.evr
+                DBSession.add(pkg)
+
+                # TODO: get upstream version
 
         transaction.commit()
