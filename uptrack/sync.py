@@ -71,14 +71,21 @@ class Sync(object):
                                        Package.release==release)).first()
 
                 if not pkg:
-                    self.log.debug("  New package")
                     pkg = Package(name=build.name, release=release)
+                    self.log.debug("  New package: %s" % pkg)
 
-                elif pkg.released_evr == build.evr:
+                elif pkg.released_evr != build.evr:
+                    self.log.debug("  We updated %s to %s" % (pkg, build.evr))
+
+                elif not pkg.upstream or not pkg.upstream_evr:
+                    self.log.debug("  No update, but we don't know yet where it comes from")
+
+                else:
+                    # We already know where the package comes from, and it
+                    # wasn't updated
                     self.log.debug("  No change, ignoring")
                     continue
 
-                self.log.debug("  We updated %s to %s" % (pkg, build.evr))
                 pkg.released_evr = build.evr
                 DBSession.add(pkg)
 
