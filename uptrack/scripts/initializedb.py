@@ -18,13 +18,14 @@
 
 import os
 import sys
-import transaction
-
-from sqlalchemy import engine_from_config
 
 from pyramid.paster import get_appsettings, setup_logging
 
-from ..models import DBSession, Base, User
+from sqlalchemy import engine_from_config
+
+import transaction
+
+from uptrack.models import DBSession, Base, User
 
 
 def usage(argv):
