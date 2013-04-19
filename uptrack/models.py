@@ -70,6 +70,9 @@ class Package(Base, BaseModel):
     upstream = relation("Upstream", backref="packages")
 
     def __str__(self):
+        if self.released_evr is None:
+            return self.name
+
         return "%s-%s" % (self.name, self.released_evr)
 
 
