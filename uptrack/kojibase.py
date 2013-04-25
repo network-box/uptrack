@@ -38,7 +38,7 @@ class KojiBase(object):
     def get_latest_builds(self, tag):
         """Get the latest builds from Koji
 
-        :param tag: The stable tag for the distro release.
+        :param tag: The stable tag for the distro.
         """
         conn = koji.ClientSession(self.kojihub_url)
 

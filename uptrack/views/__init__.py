@@ -21,18 +21,18 @@ import deform
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember, forget
 
-from uptrack.models import DBSession, Package, Release, User
+from uptrack.models import DBSession, Package, Distro, User
 
 
 def overview(request):
     pkgquery = DBSession.query(Package)
 
-    releases = []
+    distros = []
 
-    for release in DBSession.query(Release):
+    for distro in DBSession.query(Distro):
         problems = 0
 
-        pkgs = pkgquery.filter(Package.release==release)
+        pkgs = pkgquery.filter(Package.distro==distro)
         pkgs = pkgs.group_by(Package.upstream)
         total = pkgs.count()
 
@@ -45,11 +45,11 @@ def overview(request):
 
             # TODO: Up to date packages, out of date packages
 
-        r = release.__json__()
+        r = distro.__json__()
         r.update({"problems": problems, "total": total})
-        releases.append(r)
+        distros.append(r)
 
-    return {'page': 'overview', "releases": releases}
+    return {'page': 'overview', "distros": distros}
 
 def login(request):
     login_url = request.route_url('login')

@@ -61,23 +61,23 @@ class Package(Base, BaseModel):
     __tablename__ = 'packages'
     id = Column(Integer, primary_key=True)
     name = Column(Unicode, nullable=False)
-    release_id = Column(Integer, ForeignKey('releases.id'), nullable=False)
-    released_evr = Column(Unicode)
+    distro_id = Column(Integer, ForeignKey('distros.id'), nullable=False)
+    evr = Column(Unicode)
     upstream_id = Column(Integer, ForeignKey('upstreams.id'))
     upstream_evr = Column(Unicode)
 
-    release = relation("Release", backref="packages")
+    distro = relation("Distro", backref="packages")
     upstream = relation("Upstream", backref="packages")
 
     def __str__(self):
-        if self.released_evr is None:
+        if self.evr is None:
             return self.name
 
-        return "%s-%s" % (self.name, self.released_evr)
+        return "%s-%s" % (self.name, self.evr)
 
 
-class Release(Base, BaseModel):
-    __tablename__ = 'releases'
+class Distro(Base, BaseModel):
+    __tablename__ = 'distros'
     id = Column(Integer, primary_key=True)
     name = Column(Unicode, unique=True, nullable=False)
     koji_tag = Column(Unicode, unique=True, nullable=False)

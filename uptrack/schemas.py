@@ -19,7 +19,7 @@
 import colander
 import deform
 
-class ReleaseSchema(colander.Schema):
+class DistroSchema(colander.Schema):
     id = colander.SchemaNode(colander.Integer(),
                              widget=deform.widget.HiddenWidget(),
                              missing=colander.null)

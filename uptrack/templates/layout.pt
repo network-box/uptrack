@@ -56,7 +56,7 @@
               <a href="/login" class="navbar-link">Sign in</a>
             </p>
             <ul tal:condition="request.user" class="nav">
-              <li class="${'active' if page == 'releases' else ''}"><a href="/releases">Releases</a></li>
+              <li class="${'active' if page == 'distros' else ''}"><a href="/distros">Distros</a></li>
               <li class="${'active' if page == 'upstreams' else ''}"><a href="/upstreams">Upstreams</a></li>
               <li class="${'active' if page == 'users' else ''}"><a href="/users">Users</a></li>
             </ul>

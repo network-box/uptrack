@@ -23,7 +23,7 @@ from sqlalchemy.sql import and_
 import transaction
 
 from uptrack.kojibase import KojiBase
-from uptrack.models import DBSession, Package, Release
+from uptrack.models import DBSession, Package, Distro
 
 
 class Sync(object):
@@ -32,38 +32,38 @@ class Sync(object):
 
         self.kojibase = KojiBase(settings["kojihub_url"])
 
-    def get_latest_builds(self, release):
-        return self.kojibase.get_latest_builds(release.koji_tag)
+    def get_latest_builds(self, distro):
+        return self.kojibase.get_latest_builds(distro.koji_tag)
 
     def run(self):
         """Run the sync"""
         pkgs = DBSession.query(Package)
-        releases = DBSession.query(Release)
+        distros = DBSession.query(Distro)
 
-        for release in releases:
-            self.log.info("Synchronizing %s..." % release.name)
-            builds = self.get_latest_builds(release)
+        for distro in distros:
+            self.log.info("Synchronizing %s..." % distro.name)
+            builds = self.get_latest_builds(distro)
 
             for build in builds:
                 self.log.info("Processing %s..." % build.name)
                 pkg = pkgs.filter(and_(Package.name==build.name,
-                                       Package.release==release)).first()
+                                       Package.distro==distro)).first()
 
                 if not pkg:
-                    pkg = Package(name=build.name, release=release)
+                    pkg = Package(name=build.name, distro=distro)
                     DBSession.add(pkg)
                     self.log.debug("This is a new package")
 
-                elif pkg.released_evr == build.evr and \
+                elif pkg.evr == build.evr and \
                      pkg.upstream and pkg.upstream_evr:
                     # We already know where the package comes from, and it
                     # wasn't updated
                     self.log.debug("No change, ignoring")
                     continue
 
-                if pkg.released_evr != build.evr:
+                if pkg.evr != build.evr:
                     self.log.debug("We updated %s to %s" % (pkg, build.evr))
-                    pkg.released_evr = build.evr
+                    pkg.evr = build.evr
 
                 elif pkg.upstream is None or pkg.upstream_evr is None:
                     self.log.debug("No update, but we don't know yet where it comes from")
