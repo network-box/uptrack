@@ -45,28 +45,28 @@ class Sync(object):
             builds = self.get_latest_builds(release)
 
             for build in builds:
-                self.log.info(" Processing %s..." % build.name)
+                self.log.info("Processing %s..." % build.name)
                 pkg = pkgs.filter(and_(Package.name==build.name,
                                        Package.release==release)).first()
 
                 if not pkg:
                     pkg = Package(name=build.name, release=release)
-                    self.log.debug("  New package: %s" % pkg)
+                    DBSession.add(pkg)
+                    self.log.debug("This is a new package")
 
-                elif pkg.released_evr != build.evr:
-                    self.log.debug("  We updated %s to %s" % (pkg, build.evr))
-
-                elif not pkg.upstream or not pkg.upstream_evr:
-                    self.log.debug("  No update, but we don't know yet where it comes from")
-
-                else:
+                elif pkg.released_evr == build.evr and \
+                     pkg.upstream and pkg.upstream_evr:
                     # We already know where the package comes from, and it
                     # wasn't updated
-                    self.log.debug("  No change, ignoring")
+                    self.log.debug("No change, ignoring")
                     continue
 
-                pkg.released_evr = build.evr
-                DBSession.add(pkg)
+                if pkg.released_evr != build.evr:
+                    self.log.debug("We updated %s to %s" % (pkg, build.evr))
+                    pkg.released_evr = build.evr
+
+                elif pkg.upstream is None or pkg.upstream_evr is None:
+                    self.log.debug("No update, but we don't know yet where it comes from")
 
                 # TODO: get upstream version
 
