@@ -28,7 +28,7 @@ class Build(object):
 
     @property
     def evr(self):
-        return "%s:%s-%s" % (self.epoch, self.version, self.release)
+        return (self.epoch, self.version, self.release)
 
 
 class KojiBase(object):
