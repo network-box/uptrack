@@ -18,43 +18,22 @@
 
 import logging
 
-import koji
-
 from sqlalchemy.sql import and_
 
 import transaction
 
+from uptrack.kojibase import KojiBase
 from uptrack.models import DBSession, Package, Release
-
-
-class Build(object):
-    def __init__(self, name, epoch, version, release):
-        self.name = unicode(name)
-        self.epoch = unicode(epoch) if epoch is not None else u'0'
-        self.version = unicode(version)
-        self.release = unicode(release)
-
-    @property
-    def evr(self):
-        return "%s:%s-%s" % (self.epoch, self.version, self.release)
 
 
 class Sync(object):
     def __init__(self, settings):
-        self.settings = settings
         self.log = logging.getLogger("uptrack")
 
-    def get_latest_builds(self, tag):
-        """Get the latest builds from Koji
+        self.kojibase = KojiBase(settings["kojihub_url"])
 
-        :param hub_url: The URL of the Koji Hub.
-        :param tag: The stable tag for the distro release.
-        """
-        conn = koji.ClientSession(self.settings["kojihub_url"])
-
-        for build in conn.getLatestBuilds(tag):
-            yield Build(build["name"], build["epoch"], build["version"],
-                        build["release"])
+    def get_latest_builds(self, release):
+        return self.kojibase.get_latest_builds(release.koji_tag)
 
     def run(self):
         """Run the sync"""
@@ -63,7 +42,7 @@ class Sync(object):
 
         for release in releases:
             self.log.info("Synchronizing %s..." % release.name)
-            builds = self.get_latest_builds(release.koji_tag)
+            builds = self.get_latest_builds(release)
 
             for build in builds:
                 self.log.info(" Processing %s..." % build.name)
