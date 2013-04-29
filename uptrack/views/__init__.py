@@ -16,6 +16,7 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import colander
 import deform
 
 from pyramid.httpexceptions import HTTPFound
@@ -84,7 +85,7 @@ def admin(request):
     objects = DBSession.query(request.context.__model__)
 
     name = request.context.__name__
-    schema = request.context.__schema__()
+    schema = request.context.__schema__().bind()
     form = deform.Form(schema,
                        # Passing title= sets the legend not only for the form,
                        # but also for all the fields. :-/
@@ -96,7 +97,20 @@ def admin(request):
             'form': form}
 
 def save(request):
-    if request.POST["id"]:
+
+    schema = request.context.__schema__().bind()
+    form = deform.Form(schema)
+
+    controls = request.POST.items()
+
+    try:
+        postvars = form.validate(controls)
+
+    except deform.ValidationFailure as e:
+        # TODO: pass back validation errors to the user
+        return {}
+
+    if postvars["id"]:
         # We were editing an existing instance
         o = DBSession.query(request.context.__model__).get(request.POST["id"])
 
@@ -104,10 +118,14 @@ def save(request):
         # This is a new instance
         o = request.context.__model__()
 
-    for attr in request.POST:
+    for attr, value in postvars.items():
         if attr == "id":
             continue
-        setattr(o, attr, request.POST[attr])
+
+        if value == colander.null:
+            value = None
+
+        setattr(o, attr, value)
 
     DBSession.add(o)
     DBSession.flush()

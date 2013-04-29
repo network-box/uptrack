@@ -19,6 +19,26 @@
 import colander
 import deform
 
+from uptrack.models import DBSession, Upstream
+
+
+def get_upstream_options():
+    yield ('', '--')
+    for upstream in DBSession.query(Upstream):
+        yield (upstream.id, upstream.name)
+
+def upstream_validator(node, upstream_id):
+    for id, name in get_upstream_options():
+        if upstream_id == id:
+            return None
+
+    raise colander.Invalid("Please choose a valid upstream")
+
+@colander.deferred
+def deferred_upstream_widget(node, kw):
+    return deform.widget.SelectWidget(values=get_upstream_options())
+
+
 class DistroSchema(colander.Schema):
     id = colander.SchemaNode(colander.Integer(),
                              widget=deform.widget.HiddenWidget(),
@@ -26,6 +46,10 @@ class DistroSchema(colander.Schema):
     name = colander.SchemaNode(colander.String())
     koji_tag = colander.SchemaNode(colander.String())
     git_branch = colander.SchemaNode(colander.String())
+    upstream_id = colander.SchemaNode(colander.Integer(),
+                                      widget=deferred_upstream_widget,
+                                      missing=colander.null,
+                                      validator=upstream_validator)
 
 
 class UpstreamSchema(colander.Schema):
