@@ -18,6 +18,11 @@
 
 from sqlalchemy.types import TypeDecorator, Unicode
 
+class Build(object):
+    def __init__(self, name, epoch, version, release):
+        self.name = unicode(name)
+        self.evr = EVR(epoch, version, release)
+
 
 class EVR(object):
     def __init__(self, epoch, version, release):

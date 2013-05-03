@@ -18,17 +18,7 @@
 
 import koji
 
-
-class Build(object):
-    def __init__(self, name, epoch, version, release):
-        self.name = unicode(name)
-        self.epoch = unicode(epoch) if epoch is not None else u'0'
-        self.version = unicode(version)
-        self.release = unicode(release)
-
-    @property
-    def evr(self):
-        return (self.epoch, self.version, self.release)
+from uptrack.utils import Build
 
 
 class KojiBase(object):

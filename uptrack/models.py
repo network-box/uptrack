@@ -25,6 +25,8 @@ from sqlalchemy.types import Integer, Text, Unicode
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
+from uptrack.utils import EVRType
+
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
@@ -62,38 +64,12 @@ class Package(Base, BaseModel):
     id = Column(Integer, primary_key=True)
     name = Column(Unicode, nullable=False)
     distro_id = Column(Integer, ForeignKey('distros.id'), nullable=False)
-    epoch = Column(Unicode)
-    version = Column(Unicode)
-    release = Column(Unicode)
+    evr = Column(EVRType)
     upstream_id = Column(Integer, ForeignKey('upstreams.id'))
-    upstream_epoch = Column(Unicode)
-    upstream_version = Column(Unicode)
-    upstream_release = Column(Unicode)
+    upstream_evr = Column(EVRType)
 
     distro = relation("Distro", backref="packages")
     upstream = relation("Upstream", backref="packages")
-
-    def __get_evr(self):
-        evr = (self.epoch, self.version, self.release)
-
-        if None in evr:
-            return None
-
-        return evr
-
-    def __set_evr(self, evr):
-        self.epoch, self.version, self.release = evr
-
-    evr = property(__get_evr, __set_evr)
-
-    def __get_upstream_evr(self):
-        return (self.upstream_epoch, self.upstream_version,
-                self.upstream_release)
-
-    def __set_upstream_evr(self, evr):
-        self.upstream_epoch, self.upstream_version, self.upstream_release = evr
-
-    upstream_evr = property(__get_upstream_evr, __set_upstream_evr)
 
     def __str__(self):
         if self.evr is None:
