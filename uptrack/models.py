@@ -96,6 +96,9 @@ class Upstream(Base, BaseModel):
     git_branch = Column(Unicode, unique=True, nullable=False)
     base_url = Column(Unicode, unique=True, nullable=False)
 
+    def __str__(self):
+        return self.name
+
 
 class User(Base, BaseModel):
     __tablename__ = 'users'

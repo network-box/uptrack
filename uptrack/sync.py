@@ -35,6 +35,14 @@ class Sync(object):
     def get_latest_builds(self, distro):
         return self.kojibase.get_latest_builds(distro.koji_tag)
 
+    def get_upstream(self, pkg):
+        if pkg.distro.upstream:
+            # Packages from this distro all come from the same upstream
+            return upstream
+
+        # TODO: Handle the other case
+        raise ValueError("Could not find upstream for %s" % pkg)
+
     def run(self):
         """Run the sync"""
         pkgs = DBSession.query(Package)
@@ -67,6 +75,16 @@ class Sync(object):
 
                 elif pkg.upstream is None or pkg.upstream_evr is None:
                     self.log.debug("No update, but we don't know yet where it comes from")
+
+                try:
+                    pkg.upstream = self.get_upstream(pkg)
+                    self.log.debug("Found package upstream: %s"
+                                   % pkg.upstream)
+
+                except Exception as e:
+                    self.log.error(e)
+                    pkg.upstream = None
+                    continue
 
                 # TODO: get upstream version
 
