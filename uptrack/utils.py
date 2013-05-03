@@ -16,6 +16,9 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from sqlalchemy.types import TypeDecorator, Unicode
+
+
 class EVR(object):
     def __init__(self, epoch, version, release):
         self.epoch = unicode(epoch) if epoch is not None else u'0'
@@ -24,3 +27,20 @@ class EVR(object):
 
     def __str__(self):
         return "%s:%s-%s" % (self.epoch, self.version, self.release)
+
+
+class EVRType(TypeDecorator):
+    impl = Unicode
+
+    def process_bind_param(self, evr, dialect):
+        if evr is None:
+            return evr
+
+        return u"%s|%s|%s" % (evr.epoch, evr.version, evr.release)
+
+    def process_result_value(self, value, dialect):
+        if value is None:
+            return value
+
+        epoch, version, release = value.split("|")
+        return EVR(epoch, version, release)
