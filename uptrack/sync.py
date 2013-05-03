@@ -57,24 +57,21 @@ class Sync(object):
                 pkg = pkgs.filter(and_(Package.name==build.name,
                                        Package.distro==distro)).first()
 
-                if not pkg:
-                    pkg = Package(name=build.name, distro=distro)
-                    DBSession.add(pkg)
-                    self.log.debug("This is a new package")
-
-                elif pkg.evr == build.evr and \
-                     pkg.upstream and pkg.upstream_evr:
+                if pkg and (pkg.evr == build.evr) and pkg.upstream and \
+                                                      pkg.upstream_evr:
                     # We already know where the package comes from, and it
                     # wasn't updated
                     self.log.debug("No change, ignoring")
                     continue
 
-                if pkg.evr != build.evr:
+                if not pkg:
+                    pkg = Package(name=build.name, distro=distro, evr=build.evr)
+                    DBSession.add(pkg)
+                    self.log.debug("This is a new package")
+
+                elif pkg.evr != build.evr:
                     self.log.debug("We updated %s to %s" % (pkg, build.evr))
                     pkg.evr = build.evr
-
-                elif pkg.upstream is None or pkg.upstream_evr is None:
-                    self.log.debug("No update, but we don't know yet where it comes from")
 
                 try:
                     pkg.upstream = self.get_upstream(pkg)
