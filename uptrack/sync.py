@@ -24,6 +24,7 @@ import transaction
 
 from uptrack.kojibase import KojiBase
 from uptrack.models import DBSession, Package, Distro
+from uptrack.yumbase import YumBase, YumError
 
 
 class Sync(object):
@@ -31,6 +32,7 @@ class Sync(object):
         self.log = logging.getLogger("uptrack")
 
         self.kojibase = KojiBase(settings["kojihub_url"])
+        self.yumbase = YumBase(settings["yum_dir"])
 
     def get_latest_builds(self, distro):
         return self.kojibase.get_latest_builds(distro.koji_tag)
@@ -42,6 +44,10 @@ class Sync(object):
 
         # TODO: Handle the other case
         raise ValueError("Could not find upstream for %s" % pkg)
+
+    def get_upstream_evr(self, pkg):
+        return self.yumbase.get_srpm_evr(pkg.name, pkg.upstream.name,
+                                         pkg.upstream.base_url)
 
     def run(self):
         """Run the sync"""
@@ -83,6 +89,14 @@ class Sync(object):
                     pkg.upstream = None
                     continue
 
-                # TODO: get upstream version
+                try:
+                    pkg.upstream_evr = self.get_upstream_evr(pkg)
+                    self.log.debug("Found package upstream evr: %s"
+                                   % pkg.upstream_evr)
+
+                except YumError as e:
+                    self.log.error(e)
+                    pkg.upstream_evr = None
+                    continue
 
         transaction.commit()
