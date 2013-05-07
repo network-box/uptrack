@@ -44,9 +44,9 @@ def overview(request):
 
             # TODO: Up to date packages, out of date packages
 
-        r = distro.__json__()
-        r.update({"problems": problems, "total": total})
-        distros.append(r)
+        d = distro.__json__()
+        d.update({"problems": problems, "total": total, "bases": sorted(bases.items(), key=itemgetter(0))})
+        distros.append(d)
 
     return {'page': 'overview', "distros": distros}
 
