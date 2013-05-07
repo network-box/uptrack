@@ -75,7 +75,7 @@ class Package(Base, BaseModel):
         if self.evr is None:
             return self.name
 
-        return "%s-%s:%s-%s" % (self.name, self.epoch, self.version, self.release)
+        return "%s-%s" % (self.name, self.evr)
 
 
 class Distro(Base, BaseModel):
