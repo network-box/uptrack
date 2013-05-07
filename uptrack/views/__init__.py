@@ -16,6 +16,8 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from operator import itemgetter
+
 import colander
 import deform
 
@@ -36,16 +38,32 @@ def overview(request):
         pkgs = pkgquery.filter(Package.distro==distro)
         pkgs = pkgs.group_by(Package.upstream)
         total = pkgs.count()
+        bases = {}
 
         for pkg in pkgs:
             if not pkg.upstream or not pkg.upstream_evr:
                 problems += 1
                 continue
 
-            # TODO: Up to date packages, out of date packages
+            upstream = pkg.upstream.name
+
+            if not upstream in bases:
+                bases[upstream] = {"name": upstream, "id": pkg.upstream.id,
+                                   "uptodate": 0, "outofdate": 0}
+
+            if pkg.evr == pkg.upstream_evr:
+                bases[upstream]["uptodate"] += 1
+
+            elif pkg.evr < pkg.upstream_evr:
+                bases[upstream]["outofdate"] += 1
+
+            else:
+                problems += 1
+
+        bases = sorted(bases.values(), key=itemgetter("id"))
 
         d = distro.__json__()
-        d.update({"problems": problems, "total": total, "bases": sorted(bases.items(), key=itemgetter(0))})
+        d.update({"problems": problems, "total": total, "bases": bases})
         distros.append(d)
 
     return {'page': 'overview', "distros": distros}

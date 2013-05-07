@@ -7,11 +7,43 @@
       <tal:block tal:omit-tag="" tal:define="index i_distro[0]; distro i_distro[1]">
       <div class="span5 offset1">
         <h4>Overview of ${distro["name"]} packages</h4>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Up to date</th>
+              <th>Out of date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr tal:repeat="base distro['bases']">
+              <td>${base["name"]}</td>
+              <td>${base["uptodate"]}</td>
+              <td>${base["outofdate"]}</td>
+            </tr>
+          </tbody>
+        </table>
         <p>Packages with problems: ${distro["problems"]}</p>
         <p>Total number of packages: ${distro["total"]}</p>
       </div>
       <div tal:condition="len(distros) > index+1" class="span5">
         <h4>Overview of ${distros[index+1]["name"]} packages</h4>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Up to date</th>
+              <th>Out of date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr tal:repeat="base distros[index+1]['bases']">
+              <td>${base["name"]}</td>
+              <td>${base["uptodate"]}</td>
+              <td>${base["outofdate"]}</td>
+            </tr>
+          </tbody>
+        </table>
         <p>Packages with problems: ${distros[index+1]["problems"]}</p>
         <p>Total number of packages: ${distros[index+1]["total"]}</p>
       </div>
