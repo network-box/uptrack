@@ -38,11 +38,9 @@ def overview(request):
         total = pkgs.count()
 
         for pkg in pkgs:
-            if not pkg.upstream:
+            if not pkg.upstream or not pkg.upstream_evr:
                 problems += 1
-
-            elif not pkg.upstream_evr:
-                problems += 1
+                continue
 
             # TODO: Up to date packages, out of date packages
 
