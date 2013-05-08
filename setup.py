@@ -33,7 +33,7 @@ requires = [
 
 setup(name='uptrack',
       version='0.0',
-      description='uptrack',
+      description='Upstream distribution version tracking',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
         "Programming Language :: Python",
