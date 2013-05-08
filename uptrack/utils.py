@@ -33,6 +33,13 @@ class EVR(object):
     def __str__(self):
         return "%s:%s-%s" % (self.epoch, self.version, self.release)
 
+    # Note: The below (in)equality checking methods are naive: they don't know
+    # about dist tags, they consider everything as string, not the way RPM
+    # itself does.
+    # Use them only if you are interested in strict (in)equality. Proper
+    # comparison is done with rpm.labelCompare() as the 'uptodate' property of
+    # our Package model.
+
     def __eq__(self, other):
         return (other is not None) and \
                (self.release == other.release) and \
@@ -41,25 +48,6 @@ class EVR(object):
 
     def __ne__(self, other):
         return not self.__eq__(other)
-
-    def __lt__(self, other):
-        # None is always considered smaller than any evr
-        return (other is not None) and \
-               ((self.epoch < other.epoch) or \
-                ((self.epoch == other.epoch) and \
-                 (self.version < other.version)) or \
-                ((self.epoch == other.epoch) and \
-                 (self.version == other.version) and \
-                 (self.release < other.release)))
-
-    def __gt__(self, other):
-        return not self.__eq__(other) and not self.__lt__(other)
-
-    def __le__(self, other):
-        return self.__eq__(other) or self.__lt__(other)
-
-    def __ge__(self, other):
-        return not self.__lt__(other)
 
 
 class EVRType(TypeDecorator):
