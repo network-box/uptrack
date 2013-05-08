@@ -27,6 +27,7 @@ requires = [
 
     # These are not available from Pypi
     # 'koji',
+    # 'rpm',
     # 'yum',
     ]
 
