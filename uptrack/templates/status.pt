@@ -1,0 +1,44 @@
+<html lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal"
+                xmlns:metal="http://xml.zope.org/namespaces/metal"
+                metal:use-macro="layout.macros['layout']">
+
+  <tal:block metal:fill-slot="content">
+    <div class="row-fluid">
+      <h4 class="text-center">${status} packages in ${distro} coming from ${upstream}</h4>
+    </div>
+    <div tal:repeat="i_pkg filter(lambda x: x[0]%2==0, enumerate(packages))" class="row-fluid">
+      <tal:block tal:omit-tag="" tal:define="index i_pkg[0]; pkg i_pkg[1]">
+      <div class="span5 offset1">
+        <h4>${pkg.name}</h4>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>${upstream}:</td>
+              <td>${pkg.upstream_evr}</td>
+            </tr>
+            <tr>
+              <td>${distro}:</td>
+              <td>${pkg.evr}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div tal:condition="len(packages) > index+1" class="span5">
+        <h4>${packages[index+1].name}</h4>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>${upstream}:</td>
+              <td>${packages[index+1].upstream_evr}</td>
+            </tr>
+            <tr>
+              <td>${distro}:</td>
+              <td>${packages[index+1].evr}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </tal:block>
+    </div>
+  </tal:block>
+</html>

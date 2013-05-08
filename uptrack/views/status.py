@@ -18,7 +18,9 @@
 
 from operator import itemgetter
 
-from uptrack.models import DBSession, Package, Distro
+from sqlalchemy.sql import and_
+
+from uptrack.models import DBSession, Package, Distro, Upstream
 
 
 def overview(request):
@@ -62,3 +64,27 @@ def overview(request):
         distros.append(d)
 
     return {'page': 'overview', "distros": distros}
+
+def outofdate(request):
+    distro = request.context
+
+    upstream_id = int(request.GET["upstream"])
+    upstream = DBSession.query(Upstream).filter(Upstream.id==upstream_id).first()
+
+    packages = DBSession.query(Package).filter(and_(Package.distro==distro,
+                                                    Package.upstream==upstream))
+
+    def filter_outofdate(pkgs):
+        for pkg in pkgs:
+            try:
+                if not pkg.uptodate:
+                    yield pkg
+
+            except:
+                continue
+
+    packages = list(filter_outofdate(packages))
+
+    return {"page": "outofdate", "status": "Out of date",
+            "distro": distro.name, "upstream": upstream.name,
+            "packages": packages}

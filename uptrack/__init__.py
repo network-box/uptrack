@@ -64,6 +64,9 @@ def main(global_config, **settings):
     config.add_route('overview', '/')
     config.add_view('uptrack.views.status.overview', route_name='overview',
                     renderer='templates/overview.pt')
+    config.add_view('uptrack.views.status.outofdate',
+                    context='uptrack.models.Distro', name='outofdate',
+                    renderer='templates/status.pt')
 
     # Log in and log out
     config.add_route('login', '/login')

@@ -19,7 +19,7 @@
             <tr tal:repeat="base distro['bases']">
               <td>${base["name"]}</td>
               <td>${base["uptodate"]}</td>
-              <td>${base["outofdate"]}</td>
+              <td><a href="/distros/${distro['id']}/outofdate?upstream=${base['id']}">${base["outofdate"]}</a></td>
             </tr>
           </tbody>
         </table>
@@ -40,7 +40,7 @@
             <tr tal:repeat="base distros[index+1]['bases']">
               <td>${base["name"]}</td>
               <td>${base["uptodate"]}</td>
-              <td>${base["outofdate"]}</td>
+              <td><a href="/distros/${distros[index+1]['id']}/outofdate?upstream=${base['id']}">${base["outofdate"]}</a></td>
             </tr>
           </tbody>
         </table>
