@@ -62,7 +62,7 @@ def main(global_config, **settings):
 
     # Public views, status
     config.add_route('overview', '/')
-    config.add_view('uptrack.views.overview', route_name='overview',
+    config.add_view('uptrack.views.status.overview', route_name='overview',
                     renderer='templates/overview.pt')
 
     # Log in and log out
