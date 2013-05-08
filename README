@@ -9,7 +9,7 @@ Getting the source code
 =======================
 
 The Git sources are available at the following address:
-    # TODO
+    https://gitorious.org/bochecha-dayjob/uptrack
 
 Getting Started
 ===============
@@ -17,7 +17,7 @@ Getting Started
 To get started with a development instance of Uptrack, run the following
 commands::
 
-    $ git clone TODO
+    $ git clone git://gitorious.org/bochecha-dayjob/uptrack.git
     $ cd uptrack
     $ virtualenv --system-site-packages venv
     $ ./venv/bin/activate
