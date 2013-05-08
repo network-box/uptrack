@@ -25,6 +25,10 @@ commands::
     $ initialize_uptrack_db development.ini
     $ pserve development.ini
 
+An account is created by default, so you can sign in:
+    Login:    admin
+    Password: admin
+
 Legal
 =====
 
