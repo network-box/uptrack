@@ -110,6 +110,7 @@ class Distro(Base, BaseModel):
     name = Column(Unicode, unique=True, nullable=False)
     koji_tag = Column(Unicode, unique=True, nullable=False)
     git_branch = Column(Unicode, unique=True, nullable=False)
+    dist_tags = Column(Unicode, nullable=False)
     upstream_id = Column(Integer, ForeignKey('upstreams.id'))
 
     upstream = relation("Upstream")
@@ -121,6 +122,7 @@ class Upstream(Base, BaseModel):
     name = Column(Unicode, unique=True, nullable=False)
     git_branch = Column(Unicode, unique=True, nullable=False)
     base_url = Column(Unicode, unique=True, nullable=False)
+    dist_tags = Column(Unicode, nullable=False)
 
     def __str__(self):
         return self.name
