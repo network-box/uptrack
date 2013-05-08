@@ -65,3 +65,15 @@ class EVRType(TypeDecorator):
 
         epoch, version, release = value.split("|")
         return EVR(epoch, version, release)
+
+
+def dedist_release(release, dists):
+    if ',' in dists:
+        dists = [d.strip() for d in dists.split(',') if d]
+    else:
+        dists = [dists]
+
+    for dist in dists:
+        release = release.replace(dist, '')
+
+    return release

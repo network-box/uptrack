@@ -27,7 +27,7 @@ from sqlalchemy.types import Integer, Text, Unicode
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
-from uptrack.utils import EVRType
+from uptrack.utils import EVRType, dedist_release
 
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
@@ -84,12 +84,17 @@ class Package(Base, BaseModel):
         if self.upstream_evr is None:
             raise ValueError("We don't know the package's upstream EVR")
 
+        release = dedist_release(self.evr.release,
+                                 self.distro.dist_tags)
+        up_release = dedist_release(self.upstream_evr.release,
+                                    self.upstream.dist_tags)
+
         fresh = compareEVRs((self.evr.epoch,
                              self.evr.version,
-                             self.evr.release),
+                             release),
                             (self.upstream_evr.epoch,
                              self.upstream_evr.version,
-                             self.upstream_evr.release))
+                             up_release))
 
         if fresh == 0:
             return True
