@@ -35,7 +35,7 @@ def overview(request):
         bases = {}
 
         for pkg in pkgs:
-            if not pkg.upstream or not pkg.upstream_evr:
+            if not pkg.upstream:
                 problems += 1
                 continue
 
@@ -45,13 +45,14 @@ def overview(request):
                 bases[upstream] = {"name": upstream, "id": pkg.upstream.id,
                                    "uptodate": 0, "outofdate": 0}
 
-            if pkg.evr == pkg.upstream_evr:
-                bases[upstream]["uptodate"] += 1
+            try:
+                if pkg.uptodate:
+                    bases[upstream]["uptodate"] += 1
 
-            elif pkg.evr < pkg.upstream_evr:
-                bases[upstream]["outofdate"] += 1
+                else:
+                    bases[upstream]["outofdate"] += 1
 
-            else:
+            except:
                 problems += 1
 
         bases = sorted(bases.values(), key=itemgetter("id"))

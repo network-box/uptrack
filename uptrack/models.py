@@ -18,6 +18,8 @@
 
 from bcrypt import gensalt, hashpw
 
+from rpm import labelCompare as compareEVRs
+
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relation, scoped_session, sessionmaker
 from sqlalchemy.schema import Column, ForeignKey
@@ -76,6 +78,30 @@ class Package(Base, BaseModel):
             return self.name
 
         return "%s-%s" % (self.name, self.evr)
+
+    @property
+    def uptodate(self):
+        if self.upstream_evr is None:
+            raise ValueError("We don't know the package's upstream EVR")
+
+        fresh = compareEVRs((self.evr.epoch,
+                             self.evr.version,
+                             self.evr.release),
+                            (self.upstream_evr.epoch,
+                             self.upstream_evr.version,
+                             self.upstream_evr.release))
+
+        if fresh == 0:
+            return True
+
+        if fresh == -1:
+            return False
+
+        if fresh == 1:
+            raise ValueError("The evr of our package is newer than upstream")
+
+        raise ValueError("Comparing this package's EVR and upstream EVR "
+                         "returned '%s'" % fresh)
 
 
 class Distro(Base, BaseModel):
