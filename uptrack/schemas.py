@@ -47,6 +47,7 @@ class DistroSchema(colander.Schema):
     koji_tag = colander.SchemaNode(colander.String())
     git_branch = colander.SchemaNode(colander.String())
     dist_tags = colander.SchemaNode(colander.String())
+    downstream_prefix = colander.SchemaNode(colander.String())
     upstream_id = colander.SchemaNode(colander.Integer(),
                                       widget=deferred_upstream_widget,
                                       missing=colander.null,
