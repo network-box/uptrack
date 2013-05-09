@@ -84,10 +84,14 @@ class Package(Base, BaseModel):
         if self.upstream_evr is None:
             raise ValueError("We don't know the package's upstream EVR")
 
+        # Drop the dist tags to compare releases
         release = dedist_release(self.evr.release,
                                  self.distro.dist_tags)
         up_release = dedist_release(self.upstream_evr.release,
                                     self.upstream.dist_tags)
+
+        # Drop the part indicationg downstream changes to compare releases
+        release = release.rsplit(self.distro.downstream_prefix, 1)[0]
 
         fresh = compareEVRs((self.evr.epoch,
                              self.evr.version,
