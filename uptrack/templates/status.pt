@@ -11,7 +11,7 @@
       <div class="span5 offset1">
         <tal:block tal:omit-tag="" tal:define="pkg i_pkg[1]">
         <h4>${pkg.name}</h4>
-        <table class="table">
+        <table class="table table-bordered table-striped">
           <tbody>
             <tr>
               <td>${upstream}:</td>
@@ -28,7 +28,7 @@
       <div tal:condition="len(packages) > index+1" class="span5">
         <tal:block tal:omit-tag="" tal:define="pkg packages[index+1]">
         <h4>${pkg.name}</h4>
-        <table class="table">
+        <table class="table table-bordered table-striped">
           <tbody>
             <tr>
               <td>${upstream}:</td>
