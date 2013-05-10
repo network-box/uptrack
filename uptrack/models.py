@@ -131,7 +131,7 @@ class Upstream(Base, BaseModel):
     id = Column(Integer, primary_key=True)
     name = Column(Unicode, unique=True, nullable=False)
     git_branch = Column(Unicode, unique=True, nullable=False)
-    base_url = Column(Unicode, unique=True, nullable=False)
+    base_urls = Column(Unicode, unique=True, nullable=False)
     dist_tags = Column(Unicode, nullable=False)
 
     def __str__(self):

@@ -61,7 +61,7 @@ class UpstreamSchema(colander.Schema):
     name = colander.SchemaNode(colander.String())
     git_branch = colander.SchemaNode(colander.String())
     dist_tags = colander.SchemaNode(colander.String())
-    base_url = colander.SchemaNode(colander.String(), title="Base URL")
+    base_urls = colander.SchemaNode(colander.String(), title="Base URLs")
 
 
 class UserSchema(colander.Schema):

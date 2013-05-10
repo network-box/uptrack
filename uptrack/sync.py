@@ -47,7 +47,7 @@ class Sync(object):
 
     def get_upstream_evr(self, pkg):
         return self.yumbase.get_srpm_evr(pkg.name, pkg.upstream.name,
-                                         pkg.upstream.base_url)
+                                         pkg.upstream.base_urls)
 
     def run(self):
         """Run the sync"""

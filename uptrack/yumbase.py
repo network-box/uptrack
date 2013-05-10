@@ -75,15 +75,19 @@ class YumBase(yum.YumBase):
             # Reload the repos from the config files
             self.getReposFromConfig()
 
-    def get_srpm_evr(self, pkgname, reponame, repourl):
-        repoid = reponame.lower().replace(" ", "_")
-
-        if not repoid in self.repos.repos:
-            self.ensure_repo(repoid, repourl)
+    def get_srpm_evr(self, pkgname, reponame, repourls):
+        base_repoid = reponame.lower().replace(" ", "_")
 
         self.repos.disableRepo("*")
-        self.repos.enableRepo(repoid)
-        self._getSacks(archlist=['src'], thisrepo=repoid)
+
+        for i, url in enumerate(repourls.split(',')):
+            repoid = "%s:%d" % (base_repoid, i+1)
+
+            if not repoid in self.repos.repos:
+                self.ensure_repo(repoid, url.strip())
+
+            self.repos.enableRepo("%s:*" % base_repoid)
+            self._getSacks(archlist=['src'], thisrepo=repoid)
 
         srpms, globmatches, unmatched = self.pkgSack.matchPackageNames([pkgname])
 
@@ -94,7 +98,7 @@ class YumBase(yum.YumBase):
         # FIXME: I'm probably doing something wrong, but...
         # For some reason, the previous function matches on all repos for
         # which we've got sacks, even the ones we explicitly disable
-        srpms = [s for s in srpms if s.repoid == repoid]
+        srpms = [s for s in srpms if s.repoid.startswith("%s:" % base_repoid)]
 
         if not srpms:
             raise YumError("Could not find any source RPM for %s in %s"
