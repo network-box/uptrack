@@ -65,6 +65,30 @@ def overview(request):
 
     return {'page': 'overview', "distros": distros}
 
+def uptodate(request):
+    distro = request.context
+
+    upstream_id = int(request.GET["upstream"])
+    upstream = DBSession.query(Upstream).filter(Upstream.id==upstream_id).first()
+
+    packages = DBSession.query(Package).filter(and_(Package.distro==distro,
+                                                    Package.upstream==upstream))
+
+    def filter_uptodate(pkgs):
+        for pkg in pkgs:
+            try:
+                if pkg.uptodate:
+                    yield pkg
+
+            except:
+                continue
+
+    packages = list(filter_uptodate(packages))
+
+    return {"page": "uptodate", "status": "Up to date",
+            "distro": distro.name, "upstream": upstream.name,
+            "packages": packages}
+
 def outofdate(request):
     distro = request.context
 
