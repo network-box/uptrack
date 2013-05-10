@@ -45,9 +45,11 @@ class DistroSchema(colander.Schema):
                              missing=colander.null)
     name = colander.SchemaNode(colander.String())
     koji_tag = colander.SchemaNode(colander.String())
-    git_branch = colander.SchemaNode(colander.String())
     dist_tags = colander.SchemaNode(colander.String())
     downstream_prefix = colander.SchemaNode(colander.String())
+
+# This is unused, don't expose it for now, to avoid confusing Herlo :)
+#    git_branch = colander.SchemaNode(colander.String(), missing=colander.null)
     upstream_id = colander.SchemaNode(colander.Integer(),
                                       widget=deferred_upstream_widget,
                                       missing=colander.null,
@@ -59,9 +61,11 @@ class UpstreamSchema(colander.Schema):
                              widget=deform.widget.HiddenWidget(),
                              missing=colander.null)
     name = colander.SchemaNode(colander.String())
-    git_branch = colander.SchemaNode(colander.String())
     dist_tags = colander.SchemaNode(colander.String())
     base_urls = colander.SchemaNode(colander.String(), title="Base URLs")
+
+# This is unused, don't expose it for now, to avoid confusing Herlo :)
+#    git_branch = colander.SchemaNode(colander.String(), missing=colander.null)
 
 
 class UserSchema(colander.Schema):
