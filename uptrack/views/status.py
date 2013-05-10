@@ -112,3 +112,25 @@ def outofdate(request):
     return {"page": "outofdate", "status": "Out of date",
             "distro": distro.name, "upstream": upstream.name,
             "packages": packages}
+
+def problems(request):
+    distro = request.context
+
+    packages = DBSession.query(Package).filter(Package.distro==distro)
+
+    def filter_problems(pkgs):
+        for pkg in pkgs:
+            if not pkg.upstream:
+                yield pkg
+                continue
+
+            try:
+                # We're only interested in the exception case
+                pkg.uptodate
+
+            except:
+                yield pkg
+
+    packages = list(filter_problems(packages))
+
+    return {"page": "problems", "distro": distro.name, "packages": packages}

@@ -1,0 +1,56 @@
+<html lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal"
+                xmlns:metal="http://xml.zope.org/namespaces/metal"
+                metal:use-macro="layout.macros['layout']">
+
+  <tal:block metal:fill-slot="content">
+    <div class="row-fluid">
+      <h4 class="text-center">Problematic packages in ${distro}</h4>
+    </div>
+    <div tal:repeat="pkg_tuple filter(lambda x: x[0]%2==0, enumerate(packages))" class="row-fluid">
+      <tal:block tal:omit-tag="" tal:define="index pkg_tuple[0]">
+      <div class="span5 offset1">
+        <tal:block tal:omit-tag="" tal:define="pkg pkg_tuple[1]">
+        <h4>${pkg.name}</h4>
+        <table class="table table-bordered table-striped">
+          <tbody>
+            <tr>
+              <td>Our EVR</td>
+              <td>${pkg.evr}</td>
+            </tr>
+            <tr>
+              <td>Upstream</td>
+              <td>${pkg.upstream.name if pkg.upstream else '?'}</td>
+            </tr>
+            <tr>
+              <td>Upstream EVR</td>
+              <td>${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
+            </tr>
+          </tbody>
+        </table>
+        </tal:block>
+      </div>
+      <div tal:condition="len(packages) > index+1" class="span5">
+        <tal:block tal:omit-tag="" tal:define="pkg packages[index+1]">
+        <h4>${pkg.name}</h4>
+        <table class="table table-bordered table-striped">
+          <tbody>
+            <tr>
+              <td>Our EVR</td>
+              <td>${pkg.evr}</td>
+            </tr>
+            <tr>
+              <td>Upstream</td>
+              <td>${pkg.upstream.name if pkg.upstream else '?'}</td>
+            </tr>
+            <tr>
+              <td>Upstream EVR</td>
+              <td>${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
+            </tr>
+          </tbody>
+        </table>
+        </tal:block>
+      </div>
+      </tal:block>
+    </div>
+  </tal:block>
+</html>
