@@ -7,8 +7,9 @@
       <h4 class="text-center">${status} packages in ${distro} coming from ${upstream}</h4>
     </div>
     <div tal:repeat="i_pkg filter(lambda x: x[0]%2==0, enumerate(packages))" class="row-fluid">
-      <tal:block tal:omit-tag="" tal:define="index i_pkg[0]; pkg i_pkg[1]">
+      <tal:block tal:omit-tag="" tal:define="index i_pkg[0]">
       <div class="span5 offset1">
+        <tal:block tal:omit-tag="" tal:define="pkg i_pkg[1]">
         <h4>${pkg.name}</h4>
         <table class="table">
           <tbody>
@@ -22,21 +23,24 @@
             </tr>
           </tbody>
         </table>
+        </tal:block>
       </div>
       <div tal:condition="len(packages) > index+1" class="span5">
-        <h4>${packages[index+1].name}</h4>
+        <tal:block tal:omit-tag="" tal:define="pkg packages[index+1]">
+        <h4>${pkg.name}</h4>
         <table class="table">
           <tbody>
             <tr>
               <td>${upstream}:</td>
-              <td>${packages[index+1].upstream_evr}</td>
+              <td>${pkg.upstream_evr}</td>
             </tr>
             <tr>
               <td>${distro}:</td>
-              <td>${packages[index+1].evr}</td>
+              <td>${pkg.evr}</td>
             </tr>
           </tbody>
         </table>
+        </tal:block>
       </div>
       </tal:block>
     </div>
