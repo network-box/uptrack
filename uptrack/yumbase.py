@@ -104,33 +104,33 @@ class YumBase(yum.YumBase):
             raise YumError("Could not find any source RPM for %s in %s"
                              % (pkgname, reponame))
 
-        # TODO: Investigate this further
+        # TODO: Investigate this further, this could be a bug in Yum
         # We should be able to do this:
         #
-        srpms = self.bestPackagesFromList(srpms, 'src')
+        #srpms = self.bestPackagesFromList(srpms, 'src')
         #
-        # But some time ago it wouldn't work when e.g recent glibc added a
-        # BuildRequires on systemtap-sdt-devel, so they are consider "worse"
-        # than the older versions. And only then will Yum order by version, so
-        # it returns us the newest version before the BR was added.
+        # But it doesn't always work, for example when a newer version adds a
+        # BuildRequires on something, it is considered "worse" than the older
+        # ones. And only then will Yum order by version, so it returns us the
+        # newest version before the BR was added.
         #
         # IMHO, if all the packages have the same name, then Yum should only
         # return the latest one.
         #
-        # So I had to use the following:
-        #import rpm
-        #best = None
-        #for srpm in srpms:
-        #    if not best:
-        #        best = srpm
-        #        continue
-        #
-        #    rc = rpm.labelCompare((best.epoch, best.version, best.release),
-        #                          (srpm.epoch, srpm.version, srpm.release))
-        #    if rc < 0:
-        #        best = srpm
-        #if best:
-        #    srpms = [best]
+        # So we have to use the following:
+        import rpm
+        best = None
+        for srpm in srpms:
+            if not best:
+                best = srpm
+                continue
+
+            rc = rpm.labelCompare((best.epoch, best.version, best.release),
+                                  (srpm.epoch, srpm.version, srpm.release))
+            if rc < 0:
+                best = srpm
+        if best:
+            srpms = [best]
         # End of the replacement for bestPackagesFromList
 
         if len(srpms) > 1:
