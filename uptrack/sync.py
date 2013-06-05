@@ -63,13 +63,6 @@ class Sync(object):
                 pkg = pkgs.filter(and_(Package.name==build.name,
                                        Package.distro==distro)).first()
 
-                if pkg and (pkg.evr == build.evr) and pkg.upstream and \
-                                                      pkg.upstream_evr:
-                    # We already know where the package comes from, and it
-                    # wasn't updated
-                    self.log.debug("No change, ignoring")
-                    continue
-
                 if not pkg:
                     pkg = Package(name=build.name, distro=distro, evr=build.evr)
                     DBSession.add(pkg)
