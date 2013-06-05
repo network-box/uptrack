@@ -72,6 +72,9 @@ class EVRType(TypeDecorator):
 def compare_dists(d1, d2):
     return labelCompare(("0", "0", d1), ("0", "0", d2))
 
+def compare_evrs(evr1, evr2):
+    return labelCompare(evr1, evr2)
+
 def dedist_release(release, dists):
     if ',' in dists:
         dists = [d.strip() for d in dists.split(',') if d]

@@ -18,8 +18,6 @@
 
 from bcrypt import gensalt, hashpw
 
-from rpm import labelCompare as compareEVRs
-
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relation, scoped_session, sessionmaker
 from sqlalchemy.schema import Column, ForeignKey
@@ -27,7 +25,7 @@ from sqlalchemy.types import Integer, Text, Unicode
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
-from uptrack.utils import EVRType, dedist_release
+from uptrack.utils import EVRType, compare_evrs, dedist_release
 
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
@@ -93,12 +91,12 @@ class Package(Base, BaseModel):
         # Drop the part indicationg downstream changes to compare releases
         release = release.rsplit(self.distro.downstream_prefix, 1)[0]
 
-        fresh = compareEVRs((self.evr.epoch,
-                             self.evr.version,
-                             release),
-                            (self.upstream_evr.epoch,
-                             self.upstream_evr.version,
-                             up_release))
+        fresh = compare_evrs((self.evr.epoch,
+                              self.evr.version,
+                              release),
+                             (self.upstream_evr.epoch,
+                              self.upstream_evr.version,
+                              up_release))
 
         if fresh == 0:
             return True
