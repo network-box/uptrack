@@ -16,6 +16,8 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from rpm import labelCompare
+
 from sqlalchemy.types import TypeDecorator, Unicode
 
 class Build(object):
@@ -67,11 +69,16 @@ class EVRType(TypeDecorator):
         return EVR(epoch, version, release)
 
 
+def compare_dists(d1, d2):
+    return labelCompare(("0", "0", d1), ("0", "0", d2))
+
 def dedist_release(release, dists):
     if ',' in dists:
         dists = [d.strip() for d in dists.split(',') if d]
     else:
         dists = [dists]
+
+    dists = sorted(dists, cmp=compare_dists, reverse=True)
 
     for dist in dists:
         release = release.replace(dist, '')
