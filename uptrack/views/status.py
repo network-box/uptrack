@@ -74,6 +74,7 @@ def uptodate(request):
     packages = DBSession.query(Package)
     packages = packages.filter(and_(Package.distro==distro,
                                     Package.upstream==upstream))
+    packages = packages.order_by(Package.name)
 
     def filter_uptodate(pkgs):
         for pkg in pkgs:
@@ -99,6 +100,7 @@ def outofdate(request):
     packages = DBSession.query(Package)
     packages = packages.filter(and_(Package.distro==distro,
                                     Package.upstream==upstream))
+    packages = packages.order_by(Package.name)
 
     def filter_outofdate(pkgs):
         for pkg in pkgs:
@@ -120,6 +122,7 @@ def problems(request):
 
     packages = DBSession.query(Package)
     packages = packages.filter(Package.distro==distro)
+    packages = packages.order_by(Package.name)
 
     def filter_problems(pkgs):
         for pkg in pkgs:
