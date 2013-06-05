@@ -71,8 +71,9 @@ def uptodate(request):
     upstream_id = int(request.GET["upstream"])
     upstream = DBSession.query(Upstream).filter(Upstream.id==upstream_id).first()
 
-    packages = DBSession.query(Package).filter(and_(Package.distro==distro,
-                                                    Package.upstream==upstream))
+    packages = DBSession.query(Package)
+    packages = packages.filter(and_(Package.distro==distro,
+                                    Package.upstream==upstream))
 
     def filter_uptodate(pkgs):
         for pkg in pkgs:
@@ -95,8 +96,9 @@ def outofdate(request):
     upstream_id = int(request.GET["upstream"])
     upstream = DBSession.query(Upstream).filter(Upstream.id==upstream_id).first()
 
-    packages = DBSession.query(Package).filter(and_(Package.distro==distro,
-                                                    Package.upstream==upstream))
+    packages = DBSession.query(Package)
+    packages = packages.filter(and_(Package.distro==distro,
+                                    Package.upstream==upstream))
 
     def filter_outofdate(pkgs):
         for pkg in pkgs:
@@ -116,7 +118,8 @@ def outofdate(request):
 def problems(request):
     distro = request.context
 
-    packages = DBSession.query(Package).filter(Package.distro==distro)
+    packages = DBSession.query(Package)
+    packages = packages.filter(Package.distro==distro)
 
     def filter_problems(pkgs):
         for pkg in pkgs:
