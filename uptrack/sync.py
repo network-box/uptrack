@@ -34,6 +34,8 @@ class Sync(object):
         self.kojibase = KojiBase(settings["kojihub_url"])
         self.yumbase = YumBase(settings["yum_dir"])
 
+        self.latest = {}
+
     def get_latest_builds(self, distro):
         return self.kojibase.get_latest_builds(distro.koji_tag)
 
@@ -46,8 +48,15 @@ class Sync(object):
         raise ValueError("Could not find upstream for %s" % pkg)
 
     def get_upstream_evr(self, pkg):
-        return self.yumbase.get_srpm_evr(pkg.name, pkg.upstream.name,
-                                         pkg.upstream.base_urls)
+        if not pkg.upstream.name in self.latest:
+            self.latest[pkg.upstream.name] = {}
+
+        if not pkg.name in self.latest[pkg.upstream.name]:
+            self.latest[pkg.upstream.name][pkg.name] = (
+                    self.yumbase.get_srpm_evr(pkg.name, pkg.upstream.name,
+                    pkg.upstream.base_urls))
+
+        return self.latest[pkg.upstream.name][pkg.name]
 
     def run(self):
         """Run the sync"""
