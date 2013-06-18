@@ -1,3 +1,4 @@
+doc/build
 venv
 *.egg-info
 *.pyc
