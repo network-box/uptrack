@@ -63,7 +63,10 @@ def overview(request):
         bases = filter(lambda x: (x["uptodate"] + x["outofdate"]) > 0,
                        bases.values())
 
-        bases = sorted(bases, key=itemgetter("id"))
+        def display_orderer(base):
+            return base["uptodate"] + base["outofdate"]
+
+        bases = sorted(bases, key=display_orderer, reverse=True)
 
         d = distro.__json__()
         d.update({"problems": problems, "total": total, "bases": bases})
