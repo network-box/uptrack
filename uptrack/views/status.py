@@ -57,7 +57,13 @@ def overview(request):
             except:
                 problems += 1
 
-        bases = sorted(bases.values(), key=itemgetter("id"))
+        def display_filter(base):
+            return (base["uptodate"] + base["outofdate"]) > 0
+
+        bases = filter(lambda x: (x["uptodate"] + x["outofdate"]) > 0,
+                       bases.values())
+
+        bases = sorted(bases, key=itemgetter("id"))
 
         d = distro.__json__()
         d.update({"problems": problems, "total": total, "bases": bases})
