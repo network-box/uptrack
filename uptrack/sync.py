@@ -22,8 +22,9 @@ from sqlalchemy.sql import and_
 
 import transaction
 
+from uptrack.gitbase import GitBase
 from uptrack.kojibase import KojiBase
-from uptrack.models import DBSession, Package, Distro
+from uptrack.models import DBSession, Package, Distro, Upstream
 from uptrack.yumbase import YumBase, YumError
 
 
@@ -35,6 +36,9 @@ class Sync(object):
     def __init__(self, settings):
         self.log = logging.getLogger("uptrack")
 
+        self.gitbase = GitBase(settings["git_clonedir"],
+                               settings["git_rooturl"],
+                               settings["git_upstreamprefix"])
         self.kojibase = KojiBase(settings["kojihub_url"])
         self.yumbase = YumBase(settings["yum_dir"])
 
@@ -48,8 +52,17 @@ class Sync(object):
             # Packages from this distro all come from the same upstream
             return pkg.distro.upstream
 
-        # TODO: Handle the other case
-        raise SyncError("Could not find upstream for %s" % pkg)
+        # Otherwise, check in Git
+        branch = self.gitbase.get_upstream_branch(pkg.name,
+                                                  pkg.distro.git_branch)
+
+        upstreams = DBSession.query(Upstream)
+        upstream = upstreams.filter(Upstream.git_branch==branch).first()
+
+        if not upstream:
+            raise SyncError("No upstream in DB with branch %s" % branch)
+
+        return upstream
 
     def get_upstream_evr(self, pkg):
         if not pkg.upstream.name in self.latest:
