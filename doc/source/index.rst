@@ -38,7 +38,7 @@ This documentation itself is offered under the
 (CC-By-SA).
 
 We won't ask you to sign a copyright assignment or any other long and tedious
-legal document, so just send us your patches!
+legal document, so just :ref:`send us your patches <patches>`!
 
 .. _Network Box: https://www.network-box.com/
 .. _GNU Affero General Public License: http://www.gnu.org/licenses/agpl.html
