@@ -205,6 +205,37 @@ This is optional, for two reasons:
 Once you're happy with your distribution, hit the **submit** button, and move
 on to declaring your upstreams.
 
+.. _manage-upstreams:
+
+Managing upstreams
+------------------
+
+Upstreams are the second :ref:`central concept <concepts>` in Uptrack. They
+represent the upstream distributions from which your packages are coming.
+
+The upstream administration area looks like this:
+
+.. image:: _static/admin-upstreams.png
+   :align: center
+
+It looks and behave very similarly to the already detailed
+:ref:`distribution management interface <manage-distros>`, so we won't detail
+each component of the UI again, only the various fields and their meanings.
+
+First is the **name** of the upstream, which will be used to represent it
+visually in all user-visible strings.
+
+The **dist tags** field has the same meaning it had for
+:ref:`distributions <manage-distros>` : it is what packages published by this
+upstream use as their ``%{dist}``.
+
+Finally, the **base URLs** are a comma-separated list of the Yum repositories
+for this upstream. This is how Uptrack will check the versions of each
+packages published by this upstream.
+
+If you're happy with your upstreams, now is the time to
+:ref:`finally check the freshness of those packages <sync-data>`.
+
 .. _manage-users:
 
 Managing administrators
