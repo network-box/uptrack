@@ -52,3 +52,22 @@ are:
 
 .. image:: _static/overview.png
    :align: center
+
+The default admin user
+======================
+
+By default the initialization script has created an administrator user, to let
+you log in and manage the application.
+
+* Login: ``admin``
+* Password: ``admin``
+
+It is probably a good idea to :ref:`create new admin users <manage-users>`
+immediately, and delete this default account.
+
+.. _manage-users:
+
+Managing administrators
+=======================
+
+.. note:: Write this.
