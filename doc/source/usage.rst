@@ -52,6 +52,8 @@ the latest version you have published with its last version in the appropriate
 And that is how it generates an overview of how up to date your distributions
 are.
 
+.. _overview:
+
 The overview
 ============
 
@@ -280,3 +282,35 @@ Eventually, users might be able to subscribe to notifications concerning the
 status of each distribution, or something like that.
 
 The last field is the user's **password**, which is self-explanatory.
+
+.. _sync-data:
+
+Data synchronization
+====================
+
+.. note:: Before running this, you must have properly configured your
+   :ref:`distributions <manage-distros>` and
+   :ref:`upstreams <manage-upstreams>`.
+
+This is where you finally populate the database with all the information about
+the state of your packages, and how up to date they compared to your
+upstreams.
+
+The process is very simple, although a bit long.
+
+All you have to do is run the following command, from your active
+:ref:`virtual environment <virtualenv>`::
+
+    $ uptrack-sync development.ini
+
+Depending on the number of distributions and upstreams you have declared, it
+might take a while.
+
+Once finished, though, it will generate that
+:ref:`beautiful overview <overview>` you will come to love:
+
+.. image:: _static/overview.png
+   :align: center
+
+Eventually, you might want to run the ``uptrack-sync`` command as a systemd
+timer unit, or if you're into grave-digging, as a cron script.

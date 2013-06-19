@@ -21,6 +21,8 @@ source code, so you probably should get in there now::
 
     $ cd uptrack
 
+.. _virtualenv:
+
 Create a virtual environment
 ============================
 
