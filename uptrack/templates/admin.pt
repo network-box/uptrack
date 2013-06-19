@@ -17,7 +17,7 @@
           </div>
         </div>
 
-        <div class="span7">
+        <div class="span7 uptrack_adminform">
           <!--! We can't pass the legend to the form, so we add it manually here -->
           <legend>New ${page[:-1]}</legend>
           <form tal:replace="structure:form.serialize()" />

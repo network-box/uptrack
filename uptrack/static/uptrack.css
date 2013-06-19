@@ -13,7 +13,7 @@ input[type="text"], input[type="password"] {
 /* -- List widget --------------------------------------------------------- */
 /* -- The containers -------------------------------------------- */
 #uptrack_listcontainer {
-/*  margin: 1em 0; */
+  margin: 1em 2em;
   border: 1px solid black;
   border-radius: 2px;
 }
@@ -77,6 +77,10 @@ input[type="text"], input[type="password"] {
   border-bottom-right-radius: 5px;
 }
 
+/* -- The forms ------------------------------------------------- */
+.uptrack_adminform {
+  padding: 0.2em 2em;
+}
 
 /* -- Misc ---------------------------------------------------------------- */
 .form-signin {
