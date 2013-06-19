@@ -118,8 +118,21 @@ number **40**.
 
 And then get to work, those 40 packages won't become up to date on their own!
 
+Administration
+==============
+
+All administration tasks require you to log in first.
+
+Once you do, the top bar will change, revealing the administration pages:
+
+.. image:: _static/admin-controls.png
+   :align: center
+
+Each one of them will be described in the next sections, but first, you need a
+way to login the first time you run Uptrack...
+
 The default admin user
-======================
+----------------------
 
 By default the initialization script has created an administrator user, to let
 you log in and manage the application.
@@ -133,6 +146,6 @@ immediately, and delete this default account.
 .. _manage-users:
 
 Managing administrators
-=======================
+-----------------------
 
 .. note:: Write this.
