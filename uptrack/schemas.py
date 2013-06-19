@@ -50,7 +50,7 @@ class DistroSchema(colander.Schema):
 
 # This is unused, don't expose it for now, to avoid confusing Herlo :)
 #    git_branch = colander.SchemaNode(colander.String(), missing=colander.null)
-    upstream_id = colander.SchemaNode(colander.Integer(),
+    upstream_id = colander.SchemaNode(colander.Integer(), title="Upstream",
                                       widget=deferred_upstream_widget,
                                       missing=colander.null,
                                       validator=upstream_validator)
