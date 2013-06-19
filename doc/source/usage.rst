@@ -143,6 +143,68 @@ you log in and manage the application.
 It is probably a good idea to :ref:`create new admin users <manage-users>`
 immediately, and delete this default account.
 
+.. _manage-distros:
+
+Managing distributions
+----------------------
+
+Distributions are :ref:`one of the central concepts in Uptrack <concepts>`. In
+fact, they are what you will be most interested in, as they represent the
+products you have released.
+
+The distribution administration area looks like this:
+
+.. image:: _static/admin-distros.png
+   :align: center
+
+The list on the left contains known distributions, while the form on the right
+allows declaring new ones.
+
+Click on a distribution from the list, and the form changes, letting you edit
+that distribution.
+
+The ``[+]`` button below the list will change the form back into a creation
+one, and the ``[-]`` button will delete the selected distribution.
+
+Now let's look in detail at the fields.
+
+First is the **name** of the distribution, which will be used to represent it
+visually in all user-visible strings.
+
+The **koji tag** is the stable tag for your distribution. That is, all packages
+which have reached the stable repo are tagged with it in Koji.
+
+The **dist tags** are a comma-separated list of values used for the packages
+``%{dist}`` in this distribution. For example, in *Foo Linux 2*, the normal
+``%{dist}`` is ``.fl2``. However, there might still be some packages which
+were built during the *Foo Linux 1* cycle, and as such have their ``%{dist}``
+set to ``.fl1``. In such a case, you would use ``.fl1,.fl2``.
+
+The **downstream prefix** is a naming convention used to represent the changes
+you had to make to the package.
+
+For example, let's say that *Foo Linux 1* has a package called ``bar``, coming
+from *Enterprise Linux 1*, respectively as ``bar-2.0-1.fl1.foo2`` and
+``bar-2.0-1.el1``.
+
+For some reason, the *Foo Linux* community needed to make 2 changes to the
+upstream package, which they indicated with that ``.foo2`` after the
+``%{dist}`` portion of the package NVR.
+
+This is a convention that they use to denote their downstream changes, and so
+their **downstream prefix** is ``.foo``.
+
+Finally, the last field is to indicate the **upstream** for this distribution.
+This is optional, for two reasons:
+
+1. you need to have :ref:`created some upstreams <manage-upstreams>` before
+   you can set this
+2. some distributions have more than one upstream. As such, the upstream will
+   be determined per package, and this field should be left blank.
+
+Once you're happy with your distribution, hit the **submit** button, and move
+on to declaring your upstreams.
+
 .. _manage-users:
 
 Managing administrators
