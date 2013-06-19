@@ -241,4 +241,42 @@ If you're happy with your upstreams, now is the time to
 Managing administrators
 -----------------------
 
-.. note:: Write this.
+All the management tasks in Uptrack require administrators to log in.
+
+Contrarily to most applications, Uptrack doesn't have a complex system of
+permissions, groups and ACLs. Users are either logged in (in which case they
+are considered administrators) or viewing the pages anonymously.
+
+The reasoning behind this is that you are either a user of the distributions
+tracked by Uptrack who wants to know how good his favourite distribution is
+doing, or a trusted member of the community who wants to declare the latest
+release, or a new upstream.
+
+Given that, and the fact that management is fairly rare in Uptrack, there
+really is no need for complex hierarchical structures and authorization
+systems.
+
+That is also why there is no way to register for a new account: if you are a
+trusted contributor, ask an admin to create your account.
+
+With that said, here is what the user management interface looks like:
+
+.. image:: _static/admin-users.png
+   :align: center
+
+It looks and behave very similarly to the already detailed
+:ref:`distribution management interface <manage-distros>`, so we won't detail
+each component of the UI again, only the various fields and their meanings.
+
+First is the **login** of the user, which she will use... that's right, to
+log in.
+
+Next is the user's **name**, used to represent the user visually in all
+user-visible strings. At the moment, it is only used in the list on the left
+part of the user management interface.
+
+The next field is the user's **email**, which is currently completely unused.
+Eventually, users might be able to subscribe to notifications concerning the
+status of each distribution, or something like that.
+
+The last field is the user's **password**, which is self-explanatory.
