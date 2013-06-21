@@ -22,11 +22,11 @@
               </tr>
             </tal:block>
             <tr>
-              <td>Upstream EVR</td>
+              <td>Upstream&nbsp;EVR</td>
               <td>${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
             </tr>
             <tr>
-              <td>Our EVR</td>
+              <td>Our&nbsp;EVR</td>
               <td>${pkg.evr}</td>
             </tr>
           </tbody>
@@ -45,11 +45,11 @@
               </tr>
             </tal:block>
             <tr>
-              <td>Upstream EVR</td>
+              <td>Upstream&nbsp;EVR</td>
               <td>${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
             </tr>
             <tr>
-              <td>Our EVR</td>
+              <td>Our&nbsp;EVR</td>
               <td>${pkg.evr}</td>
             </tr>
           </tbody>
