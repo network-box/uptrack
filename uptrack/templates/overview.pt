@@ -5,7 +5,7 @@
   <tal:block metal:fill-slot="content">
     <div tal:repeat="i_distro filter(lambda x: x[0]%2==0, enumerate(distros))" class="row-fluid">
       <tal:block tal:omit-tag="" tal:define="index i_distro[0]">
-      <div class="span5 offset1">
+      <div class="span5 offset1 uptrack_statusblock">
         <tal:block tal:omit-tag="" tal:define="distro i_distro[1]">
         <h4>Overview of ${distro["name"]} packages</h4>
         <table class="table table-bordered table-striped">
@@ -28,7 +28,7 @@
         <p>Total number of packages: ${distro["total"]}</p>
         </tal:block>
       </div>
-      <div tal:condition="len(distros) > index+1" class="span5">
+      <div tal:condition="len(distros) > index+1" class="span5 uptrack_statusblock">
         <tal:block tal:omit-tag="" tal:define="distro distros[index+1]">
         <h4>Overview of ${distro["name"]} packages</h4>
         <table class="table table-bordered table-striped">

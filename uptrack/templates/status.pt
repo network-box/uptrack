@@ -10,7 +10,7 @@
     </div>
     <div tal:repeat="i_pkg filter(lambda x: x[0]%2==0, enumerate(packages))" class="row-fluid">
       <tal:block tal:omit-tag="" tal:define="index i_pkg[0]">
-      <div class="span5 offset1">
+      <div class="span5 offset1 uptrack_statusblock">
         <tal:block tal:omit-tag="" tal:define="pkg i_pkg[1]">
         <h4>${pkg.name}</h4>
         <table class="table table-bordered table-striped">
@@ -33,7 +33,7 @@
         </table>
         </tal:block>
       </div>
-      <div tal:condition="len(packages) > index+1" class="span5">
+      <div tal:condition="len(packages) > index+1" class="span5 uptrack_statusblock">
         <tal:block tal:omit-tag="" tal:define="pkg packages[index+1]">
         <h4>${pkg.name}</h4>
         <table class="table table-bordered table-striped">

@@ -101,3 +101,17 @@ input[type="text"], input[type="password"] {
     margin-bottom: 15px;
     padding: 7px 9px;
 }
+
+div.uptrack_statusblock {
+    margin-bottom: 2em;
+    padding: 1em 2em;
+    border-radius: 16px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+
+    border: solid 1px #EEEEEE;
+}
+
+div.uptrack_statusblock > table {
+    width: 95%;
+    margin: 1.5em auto;
+}
