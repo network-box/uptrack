@@ -14,11 +14,11 @@
         <table class="table table-bordered table-striped">
           <tbody>
             <tr>
-              <td>${upstream}:</td>
+              <td>Upstream EVR</td>
               <td>${pkg.upstream_evr}</td>
             </tr>
             <tr>
-              <td>${distro}:</td>
+              <td>Our EVR</td>
               <td>${pkg.evr}</td>
             </tr>
           </tbody>
@@ -31,11 +31,11 @@
         <table class="table table-bordered table-striped">
           <tbody>
             <tr>
-              <td>${upstream}:</td>
+              <td>Upstream EVR</td>
               <td>${pkg.upstream_evr}</td>
             </tr>
             <tr>
-              <td>${distro}:</td>
+              <td>Our EVR</td>
               <td>${pkg.evr}</td>
             </tr>
           </tbody>
