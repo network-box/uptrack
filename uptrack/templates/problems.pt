@@ -6,10 +6,10 @@
     <div class="row-fluid">
       <h4 class="text-center">Problematic packages in ${distro}</h4>
     </div>
-    <div tal:repeat="pkg_tuple filter(lambda x: x[0]%2==0, enumerate(packages))" class="row-fluid">
-      <tal:block tal:omit-tag="" tal:define="index pkg_tuple[0]">
+    <div tal:repeat="i_pkg filter(lambda x: x[0]%2==0, enumerate(packages))" class="row-fluid">
+      <tal:block tal:omit-tag="" tal:define="index i_pkg[0]">
       <div class="span5 offset1">
-        <tal:block tal:omit-tag="" tal:define="pkg pkg_tuple[1]">
+        <tal:block tal:omit-tag="" tal:define="pkg i_pkg[1]">
         <h4>${pkg.name}</h4>
         <table class="table table-bordered table-striped">
           <tbody>
