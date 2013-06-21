@@ -3,7 +3,7 @@
                 metal:use-macro="layout.macros['layout']">
 
   <tal:block metal:fill-slot="content">
-    <div tal:repeat="i_distro filter(lambda x: x[0]%2==0, enumerate(distros))" class="row-fluid">
+    <div tal:repeat="i_distro filter(lambda x: x[0]%2==0, enumerate(distros))" class="row-fluid uptrack_statusrow">
       <tal:block tal:omit-tag="" tal:define="index i_distro[0]">
       <div class="span5 offset1 uptrack_statusblock">
         <tal:block tal:omit-tag="" tal:define="distro i_distro[1]">
@@ -53,5 +53,12 @@
       </div>
       </tal:block>
     </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+          /* FIXME: isn't there a full-CSS way to do this? */
+          equalize_column_heights("div.uptrack_statusrow", "div.uptrack_statusblock");
+      });
+    </script>
   </tal:block>
 </html>
