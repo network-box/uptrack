@@ -148,4 +148,5 @@ def problems(request):
 
     packages = list(filter_problems(packages))
 
-    return {"page": "problems", "distro": distro.name, "packages": packages}
+    return {"page": "problems", "status": "Problematic",
+            "distro": distro.name, "packages": packages}
