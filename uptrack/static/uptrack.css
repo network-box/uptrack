@@ -3,10 +3,15 @@
   /* There's just not enough space between the navbar and the content */
   margin-top: 1.5em;
 }
+
 input[type="text"], input[type="password"] {
   /* Horizontal forms seem to not be aligned without this */
   padding: 0.4em;
   height: 2.2em;
+}
+body {
+  /* That default bottom padding is horribly long */
+  padding-bottom: 1em;
 }
 
 
