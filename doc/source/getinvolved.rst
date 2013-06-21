@@ -16,6 +16,19 @@ He can also be caught on IRC, under the nickname ``bochecha`` on Freenode.
 However, because he lives in a UTC+8 timezone, you might not be awake at the
 same time as he is.
 
+.. _report-bugs:
+
+Report bugs
+===========
+
+Our bug tracker is with our mailing-list and IRC channel: they are nowhere to
+be found. (well, Gitorious doesn't offer that feature yet)
+
+So if you found a bug in Uptrack, the best right now is probably that you
+:ref:`send an email <contact>` with all the details regarding the issue.
+
+Or better yet, :ref:`send us a fix <code>` to fix it!
+
 .. _code:
 
 Contribute code
@@ -79,16 +92,3 @@ It goes like this:
     $ git format-patch origin/master
 
 4. :ref:`Send <contact>` us the patch!
-
-.. _report-bugs:
-
-Report bugs
-===========
-
-Our bug tracker is with our mailing-list and IRC channel: they are nowhere to
-be found. (well, Gitorious doesn't offer that feature yet)
-
-So if you found a bug in Uptrack, the best right now is probably that you
-:ref:`send an email <contact>` with all the details regarding the issue.
-
-Or better yet, :ref:`send us a fix <code>` to fix it!
