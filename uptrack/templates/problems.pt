@@ -14,16 +14,16 @@
         <table class="table table-bordered table-striped">
           <tbody>
             <tr>
-              <td>Our EVR</td>
-              <td>${pkg.evr}</td>
-            </tr>
-            <tr>
               <td>Upstream</td>
               <td>${pkg.upstream.name if pkg.upstream else '?'}</td>
             </tr>
             <tr>
               <td>Upstream EVR</td>
               <td>${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
+            </tr>
+            <tr>
+              <td>Our EVR</td>
+              <td>${pkg.evr}</td>
             </tr>
           </tbody>
         </table>
@@ -35,16 +35,16 @@
         <table class="table table-bordered table-striped">
           <tbody>
             <tr>
-              <td>Our EVR</td>
-              <td>${pkg.evr}</td>
-            </tr>
-            <tr>
               <td>Upstream</td>
               <td>${pkg.upstream.name if pkg.upstream else '?'}</td>
             </tr>
             <tr>
               <td>Upstream EVR</td>
               <td>${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
+            </tr>
+            <tr>
+              <td>Our EVR</td>
+              <td>${pkg.evr}</td>
             </tr>
           </tbody>
         </table>
