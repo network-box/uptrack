@@ -24,6 +24,43 @@ import sys
 import git
 
 
+class subprocessed(object):
+    """Decorator to run a function in a subprocess
+
+    We can't use GitPython directly because it leaks memory and file
+    descriptors:
+        https://github.com/gitpython-developers/GitPython/issues/60
+
+    Until it is fixed, we have to use multiple processes :(
+    """
+    def __init__(self, func):
+        self.func = func
+
+    def __get__(self, instance, *args, **kwargs):
+        self.instance = instance
+        return self
+
+    def __call__(self, *args):
+        from multiprocessing import Process, Queue
+        q = Queue()
+
+        def wrapper(queue, func, *args):
+            queue.put(func(*args))
+
+        p = Process(target=wrapper,
+                    args=(q, self.func, self.instance) + args)
+        p.start()
+        p.join()
+
+        if p.exitcode == 1:
+            raise ValueError("Could not find the release branch: %s" % branch)
+
+        if p.exitcode == 2:
+            raise ValueError("Could not find an upstream branch")
+
+        return q.get()
+
+
 class GitBase(object):
     def __init__(self, git_clonedir, git_rooturl, upstream_prefix):
         self.git_clonedir = git_clonedir
@@ -79,15 +116,12 @@ class GitBase(object):
 
         return None
 
-    def get_upstream_branch_subproc(self, pkgname, branch_name, queue):
+    @subprocessed
+    def get_upstream_branch(self, pkgname, branch_name):
         """Get the latest merged upstream branch
 
         :param pkgname: The name of the package in Git.
         :param branch_name: The name of the Git branch for the distro release.
-
-        Because of a memory/fd leak in GitPython, we must use multiple
-        processes. As such:
-        :param queue: The multiprocessing.Queue
         """
         curdir = os.getcwd()
         workdir = self.git_clonedir
@@ -126,25 +160,4 @@ class GitBase(object):
         shutil.rmtree(repo.working_tree_dir)
         del repo
 
-        queue.put(up_branch)
-
-    def get_upstream_branch(self, pkgname, branch):
-        # We can't use GitPython directly because it leaks memory and
-        # file descriptors:
-        #   https://github.com/gitpython-developers/GitPython/issues/60
-        #
-        # Until it is fixed, we have to use multiple processes :(
-        from multiprocessing import Process, Queue
-        q = Queue()
-        p = Process(target=self.get_upstream_branch_subproc,
-                    args=(pkgname, branch, q))
-        p.start()
-        p.join()
-
-        if p.exitcode == 1:
-            raise ValueError("Could not find the release branch: %s" % branch)
-
-        if p.exitcode == 2:
-            raise ValueError("Could not find an upstream branch")
-
-        return q.get()
+        return up_branch
