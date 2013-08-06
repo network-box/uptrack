@@ -21,7 +21,8 @@ from rpm import labelCompare
 from sqlalchemy.types import TypeDecorator, Unicode
 
 class Build(object):
-    def __init__(self, name, epoch, version, release):
+    def __init__(self, name, epoch='0', version='0', release='0',
+                 ):
         self.name = unicode(name)
         self.evr = EVR(epoch, version, release)
 

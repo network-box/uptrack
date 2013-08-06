@@ -37,5 +37,7 @@ class KojiBase(object):
         conn = koji.ClientSession(self.kojihub_url)
 
         for build in conn.getLatestBuilds(tag):
-            yield Build(build["name"], build["epoch"], build["version"],
-                        build["release"])
+            yield Build(package["package_name"],
+                        epoch=build["epoch"],
+                        version=build["version"],
+                        release=build["release"])
