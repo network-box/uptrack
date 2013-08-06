@@ -72,14 +72,26 @@ class Sync(object):
                 pkg = pkgs.filter(and_(Package.name==build.name,
                                        Package.distro==distro)).first()
 
-                if not pkg:
-                    pkg = Package(name=build.name, distro=distro, evr=build.evr)
-                    DBSession.add(pkg)
-                    self.log.debug("This is a new package")
+                if not pkg and build.blocked:
+                    self.log.debug("Ignoring %s: it was never sync-ed and is "
+                                   "now blocked" % build.name)
+                    continue
 
-                elif pkg.evr != build.evr:
-                    self.log.debug("We updated %s to %s" % (pkg, build.evr))
-                    pkg.evr = build.evr
+                elif not pkg and not build.blocked:
+                    pkg = Package(name=build.name, distro=distro,
+                                  evr=build.evr)
+                    DBSession.add(pkg)
+                    self.log.debug("%s is a newly sync-ed package" % pkg.name)
+
+                elif pkg and build.blocked:
+                    self.log.warning("%s has been blocked, deleting it"
+                                     % pkg.name)
+                    DBSession.delete(pkg)
+
+                elif pkg and not build.blocked:
+                    if pkg.evr != build.evr:
+                        self.log.debug("%s was updated to %s" % (pkg, build.evr))
+                        pkg.evr = build.evr
 
                 try:
                     pkg.upstream = self.get_upstream(pkg)
