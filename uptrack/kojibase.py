@@ -21,6 +21,10 @@ import koji
 from uptrack.utils import Build
 
 
+class KojiError(Exception):
+    pass
+
+
 class KojiBase(object):
     def __init__(self, kojihub_url):
         self.kojihub_url = kojihub_url
