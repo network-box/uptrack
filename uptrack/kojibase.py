@@ -16,6 +16,8 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from operator import itemgetter
+
 import koji
 
 from uptrack.utils import Build
@@ -36,8 +38,27 @@ class KojiBase(object):
         """
         conn = koji.ClientSession(self.kojihub_url)
 
-        for build in conn.getLatestBuilds(tag):
-            yield Build(package["package_name"],
-                        epoch=build["epoch"],
-                        version=build["version"],
-                        release=build["release"])
+        packages = sorted(conn.listPackages(tagID="nb5.0-free"),
+                          key=itemgetter('package_name'))
+        builds = sorted(conn.getLatestBuilds("nb5.0-free"),
+                        key=itemgetter('package_name'))
+
+        for package in packages:
+            build = builds.pop(0)
+
+            if package["package_name"] == build["package_name"]:
+                yield Build(package["package_name"],
+                            epoch=build["epoch"],
+                            version=build["version"],
+                            release=build["release"])
+                continue
+
+            # Push that build back
+            builds.insert(0, build)
+
+            if package["blocked"]:
+                yield Build(package["package_name"], blocked=True)
+
+            else:
+                raise KojiError("Could not find builds for package %s"
+                                % package["package_name"])

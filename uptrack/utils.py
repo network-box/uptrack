@@ -22,9 +22,10 @@ from sqlalchemy.types import TypeDecorator, Unicode
 
 class Build(object):
     def __init__(self, name, epoch='0', version='0', release='0',
-                 ):
+                 blocked=False):
         self.name = unicode(name)
         self.evr = EVR(epoch, version, release)
+        self.blocked = blocked
 
 
 class EVR(object):
