@@ -60,5 +60,5 @@ class KojiBase(object):
                 yield Build(package["package_name"], blocked=True)
 
             else:
-                raise KojiError("Could not find builds for package %s"
-                                % package["package_name"])
+                raise KojiError("Could not find builds for package %s in tag "
+                                "%s" % (package["package_name"], tag))
