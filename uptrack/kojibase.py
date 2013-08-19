@@ -38,9 +38,9 @@ class KojiBase(object):
         """
         conn = koji.ClientSession(self.kojihub_url)
 
-        packages = sorted(conn.listPackages(tagID="nb5.0-free"),
+        packages = sorted(conn.listPackages(tagID=tag),
                           key=itemgetter('package_name'))
-        builds = sorted(conn.getLatestBuilds("nb5.0-free"),
+        builds = sorted(conn.getLatestBuilds(tag),
                         key=itemgetter('package_name'))
 
         for package in packages:
