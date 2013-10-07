@@ -32,7 +32,8 @@ body {
   overflow: auto;
 
   /* Warning: this must match the line-height of .uptrack_disabled */
-  height: 400px;
+  min-height: 400px;
+  max-height: 600px;
 }
 #uptrack_list.uptrack_disabled {
   cursor: not-allowed;
@@ -40,7 +41,7 @@ body {
   color: #848484;
   text-align: center;
 
-  /* Warning: This must match the height of #uptrack_list */
+  /* Warning: This must match the min-height of #uptrack_list */
   line-height: 400px;
 }
 
