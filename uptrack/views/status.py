@@ -60,8 +60,7 @@ def overview(request):
         def display_filter(base):
             return (base["uptodate"] + base["outofdate"]) > 0
 
-        bases = filter(lambda x: (x["uptodate"] + x["outofdate"]) > 0,
-                       bases.values())
+        bases = filter(display_filter, bases.values())
 
         def display_orderer(base):
             return base["uptodate"] + base["outofdate"]
