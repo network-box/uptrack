@@ -32,7 +32,6 @@ def overview(request):
         problems = 0
 
         pkgs = pkgquery.filter(Package.distro==distro)
-        pkgs = pkgs.group_by(Package.upstream)
         total = pkgs.count()
         bases = {}
 
