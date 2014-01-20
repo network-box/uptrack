@@ -18,7 +18,6 @@
 
 import multiprocessing
 import os
-import shutil
 import sys
 
 import git
@@ -66,6 +65,9 @@ class GitBase(object):
         self.git_clonedir = git_clonedir
         self.git_rooturl = git_rooturl
         self.upstream_prefix = upstream_prefix
+
+        if not os.path.exists(self.git_clonedir):
+            os.makedirs(self.git_clonedir)
 
     def __walk_for_upstream_branch(self, commit, ourbranch, up_prefix):
         """Find the upstream branch of a given commit
@@ -124,21 +126,26 @@ class GitBase(object):
         :param branch_name: The name of the Git branch for the distro release.
         """
         curdir = os.getcwd()
-        workdir = self.git_clonedir
+        moduledir = os.path.join(self.git_clonedir, pkgname)
 
-        # Clone the module
-        repo = git.Repo.clone_from("%s/%s" % (self.git_rooturl, pkgname),
-                                   os.path.join(workdir, pkgname))
+        if os.path.isdir(moduledir):
+            repo = git.Repo(moduledir)
+            repo.remotes.origin.fetch()
+
+        else:
+            repo = git.Repo.clone_from("%s/%s" % (self.git_rooturl, pkgname),
+                                       moduledir)
+
         os.chdir(repo.working_tree_dir)
 
         try:
             repo.git.checkout(branch_name)
+            repo.git.merge("origin/%s" % branch_name)
             branch = repo.head.reference
 
         except git.exc.GitCommandError:
             # We couldn't even find the release branch
             os.chdir(curdir)
-            shutil.rmtree(repo.working_tree_dir)
             del repo
 
             sys.exit(1)
@@ -150,14 +157,12 @@ class GitBase(object):
         if not up_branch:
             # We couldn't find the upstream branch
             os.chdir(curdir)
-            shutil.rmtree(repo.working_tree_dir)
             del repo
 
             sys.exit(2)
 
         # Clean up
         os.chdir(curdir)
-        shutil.rmtree(repo.working_tree_dir)
         del repo
 
         return up_branch
