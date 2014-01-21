@@ -23,10 +23,6 @@ import koji
 from uptrack.utils import Build
 
 
-class KojiError(Exception):
-    pass
-
-
 class KojiBase(object):
     def __init__(self, kojihub_url):
         self.kojihub_url = kojihub_url
@@ -60,5 +56,8 @@ class KojiBase(object):
                 yield Build(package["package_name"], blocked=True)
 
             else:
-                raise KojiError("Could not find builds for package %s in tag "
-                                "%s" % (package["package_name"], tag))
+                # This package has no builds in this tag, which could mean
+                # that it has just been created but never been built yet, or
+                # that it's a package for a different distro, for example.
+                # Both cases should not be considered errors, though.
+                continue
