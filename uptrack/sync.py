@@ -27,6 +27,10 @@ from uptrack.models import DBSession, Package, Distro
 from uptrack.yumbase import YumBase, YumError
 
 
+class SyncError(Exception):
+    pass
+
+
 class Sync(object):
     def __init__(self, settings):
         self.log = logging.getLogger("uptrack")
@@ -45,7 +49,7 @@ class Sync(object):
             return upstream
 
         # TODO: Handle the other case
-        raise ValueError("Could not find upstream for %s" % pkg)
+        raise SyncError("Could not find upstream for %s" % pkg)
 
     def get_upstream_evr(self, pkg):
         if not pkg.upstream.name in self.latest:
@@ -98,7 +102,7 @@ class Sync(object):
                     self.log.debug("Found package upstream: %s"
                                    % pkg.upstream)
 
-                except Exception as e:
+                except SyncError as e:
                     self.log.error(e)
                     pkg.upstream = None
                     continue
