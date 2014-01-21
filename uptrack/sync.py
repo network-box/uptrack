@@ -46,7 +46,7 @@ class Sync(object):
     def get_upstream(self, pkg):
         if pkg.distro.upstream:
             # Packages from this distro all come from the same upstream
-            return upstream
+            return pkg.distro.upstream
 
         # TODO: Handle the other case
         raise SyncError("Could not find upstream for %s" % pkg)
