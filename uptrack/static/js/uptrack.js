@@ -12,6 +12,9 @@ update_form = function(elem) {
         $("input[type=text],input[type=password]").each(function(i, input) {
             $(input).val('');
         });
+        $("select").each(function(i, combo) {
+            $(combo).val('');
+        });
     } else {
         /* Make an 'edit' form */
         $("legend").text(function(i, val) {
@@ -29,6 +32,10 @@ update_form = function(elem) {
             } else {
                 $(input).val($.trim($(elem).attr("data-"+name)));
             }
+        });
+        $("select").each(function(i, combo) {
+            var name = $(combo).attr("name");
+            $(combo).val($.trim($(elem).attr("data-"+name)));
         });
     }
 }
