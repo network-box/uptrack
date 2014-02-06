@@ -91,6 +91,7 @@ class Sync(object):
                     self.log.warning("%s has been blocked, deleting it"
                                      % pkg.name)
                     DBSession.delete(pkg)
+                    continue
 
                 elif pkg and not build.blocked:
                     if pkg.evr != build.evr:
