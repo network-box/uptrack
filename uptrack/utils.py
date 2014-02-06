@@ -45,6 +45,9 @@ class EVR(object):
     # our Package model.
 
     def __eq__(self, other):
+        if not isinstance(other, EVR):
+            return False
+
         return (other is not None) and \
                (self.release == other.release) and \
                (self.version == other.version) and \
