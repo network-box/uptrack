@@ -1,2 +1,3 @@
-include *.txt *.ini *.cfg *.rst
-recursive-include uptrack *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.js *.html *.xml
+include *.ini *.md
+recursive-include doc *.rst *.png
+recursive-include uptrack *.ico *.png *.css *.pt *.js
