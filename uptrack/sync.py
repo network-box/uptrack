@@ -88,8 +88,9 @@ class Sync(object):
                     self.log.debug("%s is a newly sync-ed package" % pkg.name)
 
                 elif pkg and build.blocked:
-                    self.log.warning("%s has been blocked, deleting it"
-                                     % pkg.name)
+                    self.log.warning("%s has been blocked from %s since the "
+                                     "las sync, deleting it"
+                                     % (pkg.name, distro.name))
                     DBSession.delete(pkg)
                     continue
 
