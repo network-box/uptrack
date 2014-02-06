@@ -22,7 +22,7 @@ from sqlalchemy.sql import and_
 
 import transaction
 
-from uptrack.gitbase import GitBase
+from uptrack.gitbase import GitBase, GitError
 from uptrack.kojibase import KojiBase
 from uptrack.models import DBSession, Package, Distro, Upstream
 from uptrack.yumbase import YumBase, YumError
@@ -53,8 +53,12 @@ class Sync(object):
             return pkg.distro.upstream
 
         # Otherwise, check in Git
-        branch = self.gitbase.get_upstream_branch(pkg.name,
-                                                  pkg.distro.git_branch)
+        try:
+            branch = self.gitbase.get_upstream_branch(pkg.name,
+                                                      pkg.distro.git_branch)
+
+        except GitError as e:
+            raise SyncError(e)
 
         upstreams = DBSession.query(Upstream)
         upstream = upstreams.filter(Upstream.git_branch==branch).first()
