@@ -81,18 +81,18 @@ class Sync(object):
                                    "now blocked" % build.name)
                     continue
 
-                elif not pkg and not build.blocked:
-                    pkg = Package(name=build.name, distro=distro,
-                                  evr=build.evr)
-                    DBSession.add(pkg)
-                    self.log.debug("%s is a newly sync-ed package" % pkg.name)
-
                 elif pkg and build.blocked:
                     self.log.warning("%s has been blocked from %s since the "
                                      "las sync, deleting it"
                                      % (pkg.name, distro.name))
                     DBSession.delete(pkg)
                     continue
+
+                elif not pkg and not build.blocked:
+                    pkg = Package(name=build.name, distro=distro,
+                                  evr=build.evr)
+                    DBSession.add(pkg)
+                    self.log.debug("%s is a newly sync-ed package" % pkg.name)
 
                 elif pkg and not build.blocked:
                     if pkg.evr != build.evr:
