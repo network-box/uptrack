@@ -52,12 +52,16 @@ class subprocessed(object):
         p.join()
 
         if p.exitcode == 1:
-            raise ValueError("Could not find the release branch: %s" % branch)
+            raise GitError("Could not find the distro branch: %s" % branch)
 
         if p.exitcode == 2:
-            raise ValueError("Could not find an upstream branch")
+            raise GitError("Could not find an upstream branch")
 
         return q.get()
+
+
+class GitError(Exception):
+    pass
 
 
 class GitBase(object):
