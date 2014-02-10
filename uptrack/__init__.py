@@ -94,4 +94,9 @@ def main(global_config, **settings):
                     context='uptrack.models.BaseModel', name='remove',
                     renderer='json')
 
+    # Package APIs
+    config.add_view('uptrack.views.packages.mark_downstream',
+                    permission='admin', renderer='json',
+                    context='uptrack.models.Package', name='markdownstream')
+
     return config.make_wsgi_app()
