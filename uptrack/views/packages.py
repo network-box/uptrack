@@ -8,3 +8,14 @@ def mark_downstream(request):
 
     except Exception as e:
         return {"error": "%s" % e}
+
+def unmark_downstream(request):
+    try:
+        pkg = request.context
+        pkg.downstream = False
+
+        return {"msg": "Unmarked %s as downstream-only in %s" % (pkg.name,
+                                                                 pkg.distro.name)}
+
+    except Exception as e:
+        return {"error": "%s" % e}
