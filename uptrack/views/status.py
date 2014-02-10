@@ -31,6 +31,7 @@ def overview(request):
     for distro in DBSession.query(Distro):
         downstream = 0
         problems = 0
+        renamed = 0
 
         pkgs = pkgquery.filter(Package.distro==distro)
         total = pkgs.count()
@@ -40,6 +41,9 @@ def overview(request):
             if pkg.downstream:
                 downstream += 1
                 continue
+
+            if pkg.upstream_pkgname is not None:
+                renamed += 1
 
             if not pkg.upstream:
                 problems += 1
@@ -73,7 +77,7 @@ def overview(request):
 
         d = distro.__json__()
         d.update({"downstream": downstream, "problems": problems,
-                  "total": total, "bases": bases})
+                  "renamed": renamed, "total": total, "bases": bases})
         distros.append(d)
 
     return {'page': 'overview', "distros": distros}
