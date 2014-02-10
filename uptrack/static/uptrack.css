@@ -151,6 +151,10 @@ div.uptrack_statusblock > table {
     margin: 1.5em auto;
 }
 
+h4 > span.uptrack_renamed {
+    font-weight: normal;
+}
+
 #alert_placeholder {
     position: fixed;
     top: 50px;
