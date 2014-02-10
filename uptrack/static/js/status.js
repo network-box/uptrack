@@ -19,9 +19,11 @@ var make_popovers = function(popover_class) {
                 $(this).click({pkgid: pkgid}, unmark_downstream_clicked);
             } else if (action === "renamed") {
                 var pkgname = $(this).attr("data-pkgname");
+                var upstream_pkgname = $(this).attr("data-upstream-pkgname");
 
-                $(this).click({pkgid: pkgid, pkgname: pkgname},
-                               mark_renamed_clicked);
+                $(this).click({pkgid: pkgid, pkgname: pkgname,
+                               upstream_pkgname: upstream_pkgname},
+                              mark_renamed_clicked);
             } else {
                 console.log("ERROR: Can't handle '" + action + "' action");
             }
@@ -70,6 +72,11 @@ var unmark_downstream_clicked = function(e) {
 var mark_renamed_clicked = function(e) {
     var pkgid = e.data.pkgid;
     var pkgname = e.data.pkgname;
+    var upstream_pkgname = e.data.upstream_pkgname;
+
+    if (upstream_pkgname === undefined) {
+        upstream_pkgname = "";
+    }
 
     $("#popover_button_" + pkgid).popover("hide");
 
@@ -77,7 +84,7 @@ var mark_renamed_clicked = function(e) {
                                               show: true});
 
     $("#uptrack_rename_package_modal").on("shown.bs.modal", function() {
-        $("#uptrack_rename_package_upstream_pkgname").val("");
+        $("#uptrack_rename_package_upstream_pkgname").val(upstream_pkgname);
         $("#uptrack_rename_package_current_name").text(pkgname);
 
         $("#uptrack_rename_package_submit").off("click");
