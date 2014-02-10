@@ -13,6 +13,10 @@ body {
   /* That default bottom padding is horribly long */
   padding-bottom: 1em;
 }
+.popover-content {
+  /* I want to control whitespace in the actual content itself */
+  padding: 0;
+}
 
 
 /* -- List widget --------------------------------------------------------- */
@@ -86,6 +90,31 @@ body {
 /* -- The forms ------------------------------------------------- */
 .uptrack_adminform {
   padding: 0.2em 2em;
+}
+
+/* -- Package actions ----------------------------------------------------- */
+.uptrack_package_popover {
+  float: right;
+}
+
+.uptrack_package_popover_menu {
+  list-style-type: none;
+  margin: 0;
+  font-size: 14px;
+}
+
+.uptrack_package_popover_menu > li {
+  display: block;
+  padding: 0.5em 1em;
+  color: rgb(51, 51, 51);
+  cursor: pointer;
+}
+.uptrack_package_popover_menu > li:hover {
+  background-color: #adc5f0;
+}
+.uptrack_package_popover_menu > li:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 /* -- Misc ---------------------------------------------------------------- */
