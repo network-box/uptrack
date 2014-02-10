@@ -25,6 +25,7 @@
           </tbody>
         </table>
         <p>Packages with problems: <a href="/distros/${distro['id']}/problems">${distro["problems"]}</a></p>
+        <p>Downstream-only packages: ${distro["downstream"]}</p>
         <p>Total number of packages: ${distro["total"]}</p>
         </tal:block>
       </div>
@@ -48,6 +49,7 @@
           </tbody>
         </table>
         <p>Packages with problems: <a href="/distros/${distro['id']}/problems">${distro["problems"]}</a></p>
+        <p>Downstream-only packages: ${distro["downstream"]}</p>
         <p>Total number of packages: ${distro["total"]}</p>
         </tal:block>
       </div>
