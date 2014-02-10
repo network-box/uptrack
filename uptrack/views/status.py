@@ -173,3 +173,14 @@ def downstream(request):
 
     return {"page": "downstream", "status": "Downstream-only",
             "distro": distro.name, "packages": packages}
+
+def renamed(request):
+    distro = request.context
+
+    packages = DBSession.query(Package)
+    packages = packages.filter(Package.distro==distro)
+    packages = packages.filter(Package.upstream_pkgname!=None)
+    packages = list(packages)
+
+    return {"page": "renamed", "status": "Renamed",
+            "distro": distro.name, "packages": packages}

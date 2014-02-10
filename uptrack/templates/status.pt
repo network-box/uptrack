@@ -39,7 +39,7 @@
 
     <div class="row-fluid">
       <h4 class="text-center">${status} packages in ${distro}
-        <tal:block tal:omit-tag="" tal:condition="page not in ('downstream', 'problems')">coming from ${upstream}</tal:block>
+        <tal:block tal:omit-tag="" tal:condition="page not in ('downstream', 'problems', 'renamed')">coming from ${upstream}</tal:block>
       </h4>
     </div>
     <div tal:repeat="i_pkg filter(lambda x: x[0]%2==0, enumerate(packages))" class="row-fluid">
