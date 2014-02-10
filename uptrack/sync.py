@@ -99,6 +99,11 @@ class Sync(object):
                         self.log.debug("%s was updated to %s" % (pkg, build.evr))
                         pkg.evr = build.evr
 
+                if pkg.downstream:
+                    self.log.debug("Ignoring %s: it is a downstream-only "
+                                   "package" % pkg.name)
+                    continue
+
                 try:
                     pkg.upstream = self.get_upstream(pkg)
                     self.log.debug("Found package upstream: %s"
