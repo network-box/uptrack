@@ -14,13 +14,18 @@
       <div class="span5 offset1 uptrack_statusblock">
         <tal:block tal:omit-tag="" tal:define="pkg i_pkg[1]">
         <h4>${pkg.name}
-          <tal:block tal:omit-tag="" tal:condition="request.user is not None and page == 'problems'">
+          <tal:block tal:omit-tag="" tal:condition="request.user is not None and page in ('downstream', 'problems')">
             <button type="button" id="popover_button_${pkg.id}" class="btn btn-default uptrack_package_popover" data-toggle="popover" data-pkg="${pkg.id}">
               <span class="icon-cog"></span>
             </button>
             <div id="popover_content_${pkg.id}" style="display: none">
               <ul class="uptrack_package_popover_menu">
-                <li data-pkgid="${pkg.id}" data-action="downstream">Mark as downstream</li>
+                <tal:block tal:omit-tag="" tal:condition="page == 'downstream'">
+                  <li data-pkgid="${pkg.id}" data-action="nodownstream">Unmark as downstream</li>
+                </tal:block>
+                <tal:block tal:omit-tag="" tal:condition="page == 'problems'">
+                  <li data-pkgid="${pkg.id}" data-action="downstream">Mark as downstream</li>
+                </tal:block>
               </ul>
             </div>
           </tal:block>
@@ -48,13 +53,18 @@
       <div tal:condition="len(packages) > index+1" class="span5 uptrack_statusblock">
         <tal:block tal:omit-tag="" tal:define="pkg packages[index+1]">
         <h4>${pkg.name}
-          <tal:block tal:omit-tag="" tal:condition="request.user is not None and page == 'problems'">
+          <tal:block tal:omit-tag="" tal:condition="request.user is not None and page in ('downstream', 'problems')">
             <button type="button" id="popover_button_${pkg.id}" class="btn btn-default uptrack_package_popover" data-toggle="popover" data-pkg="${pkg.id}">
               <span class="icon-cog"></span>
             </button>
             <div id="popover_content_${pkg.id}" style="display: none">
               <ul class="uptrack_package_popover_menu">
-                <li data-pkgid="${pkg.id}" data-action="downstream">Mark as downstream</li>
+                <tal:block tal:omit-tag="" tal:condition="page == 'downstream'">
+                  <li data-pkgid="${pkg.id}" data-action="nodownstream">Unmark as downstream</li>
+                </tal:block>
+                <tal:block tal:omit-tag="" tal:condition="page == 'problems'">
+                  <li data-pkgid="${pkg.id}" data-action="downstream">Mark as downstream</li>
+                </tal:block>
               </ul>
             </div>
           </tal:block>
