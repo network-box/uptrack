@@ -73,6 +73,9 @@ def main(global_config, **settings):
     config.add_view('uptrack.views.status.problems',
                     context='uptrack.models.Distro', name='problems',
                     renderer='templates/status.pt')
+    config.add_view('uptrack.views.status.downstream',
+                    context='uptrack.models.Distro', name='downstream',
+                    renderer='templates/status.pt')
 
     # Log in and log out
     config.add_route('login', '/login')

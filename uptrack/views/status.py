@@ -157,3 +157,15 @@ def problems(request):
 
     return {"page": "problems", "status": "Problematic",
             "distro": distro.name, "packages": packages}
+
+def downstream(request):
+    distro = request.context
+
+    packages = DBSession.query(Package)
+    packages = packages.filter(Package.distro==distro)
+    packages = packages.filter(Package.downstream==True)
+    packages = packages.order_by(Package.name)
+    packages = list(packages)
+
+    return {"page": "downstream", "status": "Downstream-only",
+            "distro": distro.name, "packages": packages}
