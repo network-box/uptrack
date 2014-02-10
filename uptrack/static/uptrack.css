@@ -93,6 +93,7 @@ body {
 }
 
 /* -- Package actions ----------------------------------------------------- */
+/* -- The popovers ---------------------------------------------- */
 .uptrack_package_popover {
   float: right;
 }
@@ -115,6 +116,19 @@ body {
 .uptrack_package_popover_menu > li:last-child {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+}
+
+/* -- The rename modals -------------------------------------------- */
+#uptrack_rename_package_upstream_group {
+    margin-bottom: 0px;
+}
+
+#uptrack_rename_package_current_name {
+    display: inline-block;
+    padding: 0.4em;
+    height: 2.2em;
+    margin-bottom: 0px;
+    vertical-align: middle;
 }
 
 /* -- Misc ---------------------------------------------------------------- */

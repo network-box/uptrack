@@ -4,6 +4,39 @@
 
   <tal:block metal:fill-slot="content">
     <script src="${request.static_url('uptrack:static/js/status.js')}"></script>
+    <div class="modal fade" id="uptrack_rename_package_modal" tabindex="-1" role="dialog" aria-labelledby="uptrack_rename_package_modal_label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="uptrack_rename_package_modal_label">Mark the package as renamed</h4>
+          </div>
+          <div class="modal-body">
+            <form id="deform" class="deform form-horizontal">
+              <fieldset>
+                <div class="control-group">
+                  <label class="control-label" for="uptrack_rename_package_current_name">Current Name:</label>
+                  <div class="controls">
+                    <span id="uptrack_rename_package_current_name"></span>
+                  </div>
+                </div>
+                <div class="control-group" id="uptrack_rename_package_upstream_group">
+                  <label class="control-label" for="uptrack_rename_package_upstream_pkgname">Upstream Name:</label>
+                  <div class="controls">
+                    <input type="text" id="uptrack_rename_package_upstream_pkgname" />
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button id="uptrack_rename_package_submit" type="button" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row-fluid">
       <h4 class="text-center">${status} packages in ${distro}
         <tal:block tal:omit-tag="" tal:condition="page not in ('downstream', 'problems')">coming from ${upstream}</tal:block>
@@ -28,6 +61,7 @@
                 </tal:block>
                 <tal:block tal:omit-tag="" tal:condition="page == 'problems'">
                   <li data-pkgid="${pkg.id}" data-action="downstream">Mark as downstream</li>
+                  <li data-pkgid="${pkg.id}" data-pkgname="${pkg.name}" data-action="renamed">Mark as renamed</li>
                 </tal:block>
               </ul>
             </div>
@@ -70,6 +104,7 @@
                 </tal:block>
                 <tal:block tal:omit-tag="" tal:condition="page == 'problems'">
                   <li data-pkgid="${pkg.id}" data-action="downstream">Mark as downstream</li>
+                  <li data-pkgid="${pkg.id}" data-pkgname="${pkg.name}" data-action="renamed">Mark as renamed</li>
                 </tal:block>
               </ul>
             </div>
