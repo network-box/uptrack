@@ -133,6 +133,9 @@ def problems(request):
 
     def filter_problems(pkgs):
         for pkg in pkgs:
+            if pkg.downstream:
+                continue
+
             if not pkg.upstream:
                 yield pkg
                 continue
