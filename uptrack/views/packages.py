@@ -19,3 +19,20 @@ def unmark_downstream(request):
 
     except Exception as e:
         return {"error": "%s" % e}
+
+def mark_renamed(request):
+    try:
+        upstream_pkgname = request.GET["upstream_pkgname"]
+
+    except KeyError as e:
+        return {"error": "Please provide an upstream name"}
+
+    try:
+        pkg = request.context
+        pkg.upstream_pkgname = upstream_pkgname
+
+        return {"msg": ("Marked %s as renamed from %s in %s"
+                        % (pkg.name, upstream_pkgname, pkg.distro.name))}
+
+    except Exception as e:
+        return {"error": "%s" % e}

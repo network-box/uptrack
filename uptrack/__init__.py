@@ -104,5 +104,8 @@ def main(global_config, **settings):
     config.add_view('uptrack.views.packages.unmark_downstream',
                     permission='admin', renderer='json',
                     context='uptrack.models.Package', name='unmarkdownstream')
+    config.add_view('uptrack.views.packages.mark_renamed',
+                    permission='admin', renderer='json',
+                    context='uptrack.models.Package', name='markrenamed')
 
     return config.make_wsgi_app()
