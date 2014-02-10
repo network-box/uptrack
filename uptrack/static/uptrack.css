@@ -121,3 +121,10 @@ div.uptrack_statusblock > table {
     width: 95%;
     margin: 1.5em auto;
 }
+
+#alert_placeholder {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    width: 500px;
+}
