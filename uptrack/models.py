@@ -67,6 +67,7 @@ class Package(Base, BaseModel):
     evr = Column(EVRType)
     upstream_id = Column(Integer, ForeignKey('upstreams.id'))
     upstream_evr = Column(EVRType)
+    upstream_pkgname = Column(Unicode)
     downstream = Column(Boolean, nullable=False, default=False)
 
     distro = relation("Distro", backref="packages")
