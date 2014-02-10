@@ -21,7 +21,7 @@ from bcrypt import gensalt, hashpw
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relation, scoped_session, sessionmaker
 from sqlalchemy.schema import Column, ForeignKey
-from sqlalchemy.types import Integer, Text, Unicode
+from sqlalchemy.types import Boolean, Integer, Text, Unicode
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
@@ -67,6 +67,7 @@ class Package(Base, BaseModel):
     evr = Column(EVRType)
     upstream_id = Column(Integer, ForeignKey('upstreams.id'))
     upstream_evr = Column(EVRType)
+    downstream = Column(Boolean, nullable=False, default=False)
 
     distro = relation("Distro", backref="packages")
     upstream = relation("Upstream", backref="packages")
