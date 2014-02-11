@@ -55,7 +55,7 @@ class Sync(object):
         if not pkg.upstream.name in self.latest:
             self.latest[pkg.upstream.name] = {}
 
-        pkgname = pkg.name
+        pkgname = pkg.upstream_pkgname if pkg.upstream_pkgname else pkg.name
 
         if not pkgname in self.latest[pkg.upstream.name]:
             evr = self.yumbase.get_srpm_evr(pkgname, pkg.upstream.name,
