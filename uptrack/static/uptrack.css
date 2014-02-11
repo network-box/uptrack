@@ -169,6 +169,11 @@ h4 > span.uptrack_renamed {
     font-weight: normal;
 }
 
+.uptrack_evr {
+    font-size: 14px;
+    font-family: monospace;
+}
+
 #alert_placeholder {
     position: fixed;
     top: 50px;

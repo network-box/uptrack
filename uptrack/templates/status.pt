@@ -80,11 +80,11 @@
             </tal:block>
             <tr>
               <td>Upstream&nbsp;EVR</td>
-              <td>${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
+              <td class="uptrack_evr">${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
             </tr>
             <tr>
               <td>Our&nbsp;EVR</td>
-              <td>${pkg.evr}</td>
+              <td class="uptrack_evr">${pkg.evr}</td>
             </tr>
           </tbody>
         </table>
@@ -126,11 +126,11 @@
             </tal:block>
             <tr>
               <td>Upstream&nbsp;EVR</td>
-              <td>${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
+              <td class="uptrack_evr">${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
             </tr>
             <tr>
               <td>Our&nbsp;EVR</td>
-              <td>${pkg.evr}</td>
+              <td class="uptrack_evr">${pkg.evr}</td>
             </tr>
           </tbody>
         </table>
