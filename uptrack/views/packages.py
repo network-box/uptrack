@@ -1,21 +1,25 @@
 def mark_downstream(request):
     try:
-        pkg = request.context
-        pkg.downstream = True
+        value = request.GET["value"]
 
-        return {"msg": "Marked %s as downstream-only in %s" % (pkg.name,
-                                                               pkg.distro.name)}
+    except KeyError as e:
+        return {"error": "Please provide a value"}
 
-    except Exception as e:
-        return {"error": "%s" % e}
+    value = (value == 'true')
 
-def unmark_downstream(request):
     try:
         pkg = request.context
-        pkg.downstream = False
+        pkg.downstream = value
 
-        return {"msg": "Unmarked %s as downstream-only in %s" % (pkg.name,
-                                                                 pkg.distro.name)}
+        if value:
+            msg = ("Marked %s as downstream-only in %s"
+                   % (pkg.name, pkg.distro.name))
+
+        else:
+            msg = ("Unmarked %s as downstream-only in %s"
+                   % (pkg.name, pkg.distro.name))
+
+        return {"msg": msg}
 
     except Exception as e:
         return {"error": "%s" % e}
