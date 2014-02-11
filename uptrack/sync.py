@@ -56,11 +56,14 @@ class Sync(object):
             self.latest[pkg.upstream.name] = {}
 
         if not pkg.name in self.latest[pkg.upstream.name]:
-            self.latest[pkg.upstream.name][pkg.name] = (
-                    self.yumbase.get_srpm_evr(pkg.name, pkg.upstream.name,
-                    pkg.upstream.base_urls))
+            evr = self.yumbase.get_srpm_evr(pkg.name, pkg.upstream.name,
+                                            pkg.upstream.base_urls)
+            self.latest[pkg.upstream.name][pkg.name] = evr
 
-        return self.latest[pkg.upstream.name][pkg.name]
+        else:
+            evr = self.latest[pkg.upstream.name][pkg.name]
+
+        return evr
 
     def run(self):
         """Run the sync"""
