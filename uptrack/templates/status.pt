@@ -78,10 +78,12 @@
                 <td>${pkg.upstream.name if pkg.upstream else '?'}</td>
               </tr>
             </tal:block>
+            <tal:block tal:omit-tag="" tal:condition="page != 'downstream'">
             <tr>
               <td>Upstream&nbsp;EVR</td>
               <td class="uptrack_evr">${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
             </tr>
+            </tal:block>
             <tr>
               <td>Our&nbsp;EVR</td>
               <td class="uptrack_evr">${pkg.evr}</td>
@@ -124,10 +126,12 @@
                 <td>${pkg.upstream.name if pkg.upstream else '?'}</td>
               </tr>
             </tal:block>
+            <tal:block tal:omit-tag="" tal:condition="page != 'downstream'">
             <tr>
               <td>Upstream&nbsp;EVR</td>
               <td class="uptrack_evr">${pkg.upstream_evr if pkg.upstream_evr else '?'}</td>
             </tr>
+            </tal:block>
             <tr>
               <td>Our&nbsp;EVR</td>
               <td class="uptrack_evr">${pkg.evr}</td>
