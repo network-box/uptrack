@@ -30,6 +30,8 @@ from uptrack.sync import Sync
 
 def get_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--distro", "-d", default=None,
+                        help="The distro to synchronize (all by default)")
     parser.add_argument("config", help="The Uptrack configuration file")
 
     return parser.parse_args()
@@ -44,4 +46,4 @@ def main():
     DBSession.configure(bind=engine)
 
     sync = Sync(settings)
-    sync.run()
+    sync.run(distro_name=args.distro)

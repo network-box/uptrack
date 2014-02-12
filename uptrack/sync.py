@@ -67,10 +67,14 @@ class Sync(object):
 
         return evr
 
-    def run(self):
+    def run(self, distro_name=None):
         """Run the sync"""
         pkgs = DBSession.query(Package)
         distros = DBSession.query(Distro)
+
+        if distro_name is not None:
+            # There will be only one anyway
+            distros = distros.filter(Distro.name==distro_name)
 
         for distro in distros:
             self.log.info("Synchronizing %s..." % distro.name)
