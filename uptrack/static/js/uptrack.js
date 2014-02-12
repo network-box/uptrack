@@ -12,3 +12,14 @@ var equalize_column_heights = function(row_selector, column_selector) {
         $(row).find(column_selector).height(tallest_height);
     });
 }
+
+var notify = function(msg, level) {
+    if (level === undefined) {
+        level = "info";
+    }
+    level = "alert-" + level;
+
+    var notif_elem = $("#notify_placeholder");
+    var notif = '<div class="alert ' + level + ' fade in"><a class="close" data-dismiss="alert">×</a><span>' + msg + '</span></div>';
+    $(notif_elem).html(notif);
+}

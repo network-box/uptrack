@@ -174,7 +174,7 @@ h4 > span.uptrack_renamed {
     font-family: monospace;
 }
 
-#alert_placeholder {
+#notify_placeholder {
     position: fixed;
     top: 50px;
     right: 50px;

@@ -66,7 +66,7 @@
     </div>
 
     <div class="container-fluid">
-      <div id="alert_placeholder"></div>
+      <div id="notify_placeholder"></div>
       <tal:block metal:define-slot="content">
       </tal:block>
 
