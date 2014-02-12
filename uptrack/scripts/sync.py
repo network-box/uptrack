@@ -16,6 +16,7 @@
 # along with Uptrack.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import argparse
 import os
 import sys
 
@@ -27,16 +28,16 @@ from uptrack.models import DBSession
 from uptrack.sync import Sync
 
 
-def usage(argv):
-    cmd = os.path.basename(argv[0])
-    print('usage: %s <config_uri>\n'
-          '(example: "%s development.ini")' % (cmd, cmd))
-    sys.exit(1)
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("config", help="The Uptrack configuration file")
 
-def main(argv=sys.argv):
-    if len(argv) != 2:
-        usage(argv)
-    config_uri = argv[1]
+    return parser.parse_args()
+
+def main():
+    args = get_args()
+    config_uri = args.config
+
     setup_logging(config_uri)
     settings = get_appsettings(config_uri)
     engine = engine_from_config(settings, 'sqlalchemy.')
