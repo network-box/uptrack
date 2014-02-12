@@ -45,10 +45,14 @@ var mark_downstream_clicked = function(e) {
         var notif = $("#alert_placeholder");
 
         if (data.error !== undefined) {
-            $(notif).html('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><span>' + data.error + '</span></div>');
+            var msg = data.error;
+            var level = "error";
         } else {
-            $(notif).html('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a><span>' + data.msg + '</span></div>');
+            var msg = data.msg;
+            var level = "success";
         }
+
+        notify(msg, level);
     }, 'json');
 
     return false;
