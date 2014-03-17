@@ -87,7 +87,13 @@ class YumBase(yum.YumBase):
                 self.ensure_repo(repoid, url.strip())
 
             self.repos.enableRepo("%s:*" % base_repoid)
-            self._getSacks(archlist=['src'], thisrepo=repoid)
+
+            try:
+                self._getSacks(archlist=['src'], thisrepo=repoid)
+
+            except yum.Errors.NoMoreMirrorsRepoError:
+                raise YumError("Could not access the %s repository"
+                               % reponame)
 
         srpms, globmatches, unmatched = self.pkgSack.matchPackageNames([pkgname])
 
