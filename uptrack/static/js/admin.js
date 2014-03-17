@@ -117,6 +117,9 @@ var update_form = function(elem) {
         $("input[type=text],input[type=password]").each(function(i, input) {
             $(input).val('');
         });
+        $("input[type=checkbox]").each(function(i, input) {
+            $(input).prop("checked", 0);
+        });
         $("select").each(function(i, combo) {
             $(combo).val('');
         });
@@ -137,6 +140,11 @@ var update_form = function(elem) {
             } else {
                 $(input).val($.trim($(elem).attr("data-"+name)));
             }
+        });
+        $("input[type=checkbox]").each(function(i, input) {
+            var name = $(input).attr("name");
+            var value = parseInt($(elem).attr("data-"+name), 10);
+            $(input).prop("checked", value);
         });
         $("select").each(function(i, combo) {
             var name = $(combo).attr("name");
