@@ -41,7 +41,7 @@ class Sync(object):
         self.latest = {}
 
     def get_latest_builds(self, distro):
-        return self.kojibase.get_latest_builds(distro.koji_tag)
+        return self.kojibase.get_latest_builds(distro.koji_tag, distro.inherit)
 
     def get_upstream(self, pkg):
         if pkg.distro.upstream:

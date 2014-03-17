@@ -27,16 +27,18 @@ class KojiBase(object):
     def __init__(self, kojihub_url):
         self.kojihub_url = kojihub_url
 
-    def get_latest_builds(self, tag):
+    def get_latest_builds(self, tag, inherit):
         """Get the latest builds from Koji
 
         :param tag: The stable tag for the distro.
+        :param inherit: Whether to follow inheritance when searching for
+                        builds.
         """
         conn = koji.ClientSession(self.kojihub_url)
 
         packages = sorted(conn.listPackages(tagID=tag, inherited=True),
                           key=itemgetter('package_name'))
-        builds = sorted(conn.getLatestBuilds(tag),
+        builds = sorted(conn.listTagged(tag, latest=True, inherit=inherit),
                         key=itemgetter('package_name'))
 
         for package in packages:
