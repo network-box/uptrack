@@ -123,6 +123,7 @@ class Distro(Base, BaseModel):
     koji_tag = Column(Unicode, unique=True, nullable=False)
     dist_tags = Column(Unicode, nullable=False)
     downstream_prefix = Column(Unicode, nullable=False)
+    inherit = Column(Boolean, nullable=False, default=False)
     git_branch = Column(Unicode, unique=True)
     upstream_id = Column(Integer, ForeignKey('upstreams.id'))
 
