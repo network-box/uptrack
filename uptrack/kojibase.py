@@ -42,17 +42,22 @@ class KojiBase(object):
                         key=itemgetter('package_name'))
 
         for package in packages:
-            build = builds.pop(0)
+            try:
+                build = builds.pop(0)
 
-            if package["package_name"] == build["package_name"]:
-                yield Build(package["package_name"],
-                            epoch=build["epoch"],
-                            version=build["version"],
-                            release=build["release"])
-                continue
+                if package["package_name"] == build["package_name"]:
+                    yield Build(package["package_name"],
+                                epoch=build["epoch"],
+                                version=build["version"],
+                                release=build["release"])
+                    continue
 
-            # Push that build back
-            builds.insert(0, build)
+                # Push that build back, it's for another package
+                builds.insert(0, build)
+
+            except IndexError:
+                # We ran out of builds
+                pass
 
             if package["blocked"]:
                 yield Build(package["package_name"], blocked=True)
