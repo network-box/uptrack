@@ -48,6 +48,9 @@ class BaseModel(object):
 
             value = getattr(self, attr)
 
+            if isinstance(value, bool):
+                value = 1 if value else 0
+
             if value is None:
                 value = ''
 
